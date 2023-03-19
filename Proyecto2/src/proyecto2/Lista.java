@@ -102,20 +102,58 @@ public class Lista<T> {
         }
     }
     
-    public Resumen Buscar(String busqueda){
+    public Resumen Buscar(String titulo){
         Nodo<Resumen> temp = First;
         if(this.isEmpty()){
         
         }else{
         for (int i = 0; i < this.getSize(); i++) {
-            if (temp.getData().getTitulo().equalsIgnoreCase(busqueda)){
+            if (temp.getData().getTitulo().equalsIgnoreCase(titulo)){
                 return temp.getData();
             }
             temp = temp.getpNext();
         }
         }
         return null;
-    } 
+    }
+    
+    public void OrdenarCrec(){
+        
+        if (!isEmpty()){
+            Nodo<Resumen> aux = (Nodo<Resumen>) getFirst();
+            Nodo<Resumen> index;
+            Resumen temp;
+            while (aux != null){
+                index = (Nodo<Resumen>) aux.getpNext();
+                while (index != null){
+                    String a = String.valueOf(aux.getData().getTitulo().charAt(0));
+                    String b = String.valueOf(index.getData().getTitulo().charAt(0));
+                    int comp = a.compareTo(b);
+                    if(comp > 0){
+                        temp = aux.getData();
+                        aux.setData(index.getData());
+                        index.setData(temp);
+                    }
+                    index = (Nodo<Resumen>) index.getpNext();
+                }aux = (Nodo<Resumen>) aux.getpNext();
+            }
+        }
+    }
+    
+    public String getTitulos() {
+        
+        Nodo<Resumen> temp = First;
+        String titulos_string = "";
+        if(this.isEmpty()){
+            titulos_string = "";
+        }
+        while(temp != null){
+            String object = temp.getData().getTitulo();
+            titulos_string = titulos_string + object + "\n";
+            temp = temp.getpNext();
+        }
+        return titulos_string;
+    }
 }
         
 

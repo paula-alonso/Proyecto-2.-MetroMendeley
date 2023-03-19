@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.PrintWriter;
 import javax.swing.JFileChooser;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 /**
@@ -106,7 +107,7 @@ public class Funciones {
         return busqueda; 
     }
     
-    public static int getFrecuencia(String resumen, String palabra) {
+    private static int getFrecuencia(String resumen, String palabra) {
         
         resumen = resumen.toLowerCase();
         String[] arr = resumen.split(palabra);
@@ -114,7 +115,42 @@ public class Funciones {
             
         return frecuencia;
     }
-
+    
+    public static String contarPalabras(Resumen resumen) {
+        String palabras = resumen.getPalabras_claves();
+        String[] palabra = palabras.split(",");
+        String conteo = "";
+        
+        for (int i = 0; i<palabra.length; i++) {
+            int frecuencia = Funciones.getFrecuencia(resumen.getCuerpo(), palabra[i]);
+            conteo = conteo + palabra[i] + ": " + frecuencia + "\n";
+        }
+        
+        return conteo;
+    }
+    
+    public static Lista getResumenes(Lista[] hashTable) {
+        
+        Lista resumenes = new Lista();
+        
+        for (int i = 0; i<hashTable.length; i++) {
+            
+            if (hashTable[i]!= null) {
+                Nodo nodo = hashTable[i].getFirst();
+                resumenes.InsertInFinal(nodo.getData());
+                while (nodo.getpNext()!=null) {
+                    nodo = nodo.getpNext();
+                    resumenes.InsertInFinal(nodo.getData());
+                }
+            }
+        }
+        return resumenes;
+    }
+    
+    public static void AsignarTitulos(String titulos, JList lista) {
+        String[] array_titulos = titulos.split("\n");
+        lista.setListData(array_titulos);
+    }
     
     private static Component areaTexto;
 

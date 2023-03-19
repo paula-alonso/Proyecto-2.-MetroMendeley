@@ -24,7 +24,11 @@ public class main {
         Lista[] hashTable = Funciones.newHashTable();
         System.out.println(resumen.getTitulo()+"\n"+resumen.getAutores()+"\n"+ resumen.getCuerpo()+"\n"+resumen.getPalabras_claves());
         Funciones.Insert(resumen, hashTable);
-        int frecuencia = Funciones.getFrecuencia(resumen.getCuerpo(), "arquitectura de referencia");
+        String conteo = Funciones.contarPalabras(resumen);
+        System.out.println(conteo);
+        Lista resumenes = Funciones.getResumenes(hashTable);
+        resumenes.OrdenarCrec();
+        String titulos = resumenes.getTitulos();
         int i = 0;
     }
     
