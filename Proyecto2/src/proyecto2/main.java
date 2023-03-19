@@ -24,10 +24,8 @@ public class main {
         Lista[] hashTable = Funciones.newHashTable();
         System.out.println(resumen.getTitulo()+"\n"+resumen.getAutores()+"\n"+ resumen.getCuerpo()+"\n"+resumen.getPalabras_claves());
         Funciones.Insert(resumen, hashTable);
-        Funciones.Insert(resumen, hashTable);
-        Funciones.Insert(resumen, hashTable);
-        int frecuencia = Funciones.getFrecuencia(resumen.getCuerpo(), "Meyerhof");
-        int i =0;
+        int frecuencia = Funciones.getFrecuencia(resumen.getCuerpo(), "fundaciones directas");
+        int i = 0;
     }
     
 }
