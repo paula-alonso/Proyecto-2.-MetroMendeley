@@ -24,7 +24,7 @@ public class main {
         Lista[] hashTable = Funciones.newHashTable();
         System.out.println(resumen.getTitulo()+"\n"+resumen.getAutores()+"\n"+ resumen.getCuerpo()+"\n"+resumen.getPalabras_claves());
         Funciones.Insert(resumen, hashTable);
-        int frecuencia = Funciones.getFrecuencia(resumen.getCuerpo(), "fundaciones directas");
+        int frecuencia = Funciones.getFrecuencia(resumen.getCuerpo(), "arquitectura de referencia");
         int i = 0;
     }
     
