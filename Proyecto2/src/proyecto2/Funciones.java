@@ -11,6 +11,7 @@ import java.io.FileReader;
 import java.io.PrintWriter;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -127,8 +128,11 @@ public class Funciones {
             
         return frecuencia;
     }
-
     
+    /**
+     * Metodo seleccionar archivo txt
+     */
+
     private static Component areaTexto;
 
     public static File FileChooser() {
@@ -136,16 +140,23 @@ public class Funciones {
      File fichero = null;
 
      JFileChooser fileChooser = new JFileChooser();
-     int seleccion = fileChooser.showSaveDialog(areaTexto);
-     if (seleccion == JFileChooser.APPROVE_OPTION)
-     {
-    fichero = fileChooser.getSelectedFile();}
+     FileNameExtensionFilter filter = new FileNameExtensionFilter(".TXT","txt");
+     fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+     fileChooser.setFileFilter(filter);
+     int seleccion = fileChooser.showOpenDialog(areaTexto);
+     if (seleccion == JFileChooser.APPROVE_OPTION){
+        fichero = fileChooser.getSelectedFile();
+        String path=fichero.getAbsolutePath();
+        if(!path.contains("txt")) {
+            JOptionPane.showMessageDialog(null, "Por favor elija un archivo del tipo txt");
+            return null;
+            }
+     }
 
      return fichero;
 
     }
-
-        
+   
     /**
      * Metodo leer Txt elegido para cargar
      * @param archivo archivo txt a cargar
