@@ -9,17 +9,36 @@ package proyecto2;
  * @author alons
  */
 public class Resumen {
+    
+    private int posicion;
+    private int clave;
     private String titulo;
     private String autores;
     private String cuerpo;
     private String palabras_claves;
-
+    
+    
+    /**
+     * Metodo constructor parametrizado
+     * @param titulo Titulo del articulo
+     * @param autores Autores del articulo
+     * @param cuerpo Cuerpo del resumen
+     * @param palabras_claves Palabras clave del articulo
+     */
     public Resumen(String titulo, String autores, String cuerpo, String palabras_claves) {
         this.titulo = titulo;
         this.autores = autores;
         this.cuerpo = cuerpo;
         this.palabras_claves = palabras_claves;
     }
+    
+    public Resumen() {
+        this.titulo = "abcdefg";
+        this.autores = "";
+        this.cuerpo = "";
+        this.palabras_claves = "";
+    }
+    
 
     /**
      * @return the titulo
@@ -75,6 +94,34 @@ public class Resumen {
      */
     public void setPalabras_claves(String palabras_claves) {
         this.palabras_claves = palabras_claves;
+    }
+
+    /**
+     * @return the posicion
+     */
+    public int getPosicion() {
+        return posicion;
+    }
+
+    /**
+     * @param posicion the posicion to set
+     */
+    public void setPosicion(int posicion) {
+        this.posicion = posicion;
+    }
+
+    /**
+     * @return the clave
+     */
+    public int getClave() {
+        return clave;
+    }
+
+    /**
+     * @param clave the clave to set
+     */
+    public void setClave(int clave) {
+        this.clave = clave;
     }
     
     

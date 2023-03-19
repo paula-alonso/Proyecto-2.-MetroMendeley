@@ -15,6 +15,13 @@ public class main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        
+        Resumen resumen = new Resumen();
+        Nodo[] hashTable = Funciones.newHashTable();
+        Funciones.Insert(resumen, hashTable);
+        Funciones.Insert(resumen, hashTable);
+        Funciones.Insert(resumen, hashTable);
+        int i = 0;
     }
     
 }
