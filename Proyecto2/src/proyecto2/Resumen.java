@@ -16,6 +16,7 @@ public class Resumen {
     private String autores;
     private String cuerpo;
     private String palabras_claves;
+
     
     
     /**
@@ -30,16 +31,17 @@ public class Resumen {
         this.autores = autores;
         this.cuerpo = cuerpo;
         this.palabras_claves = palabras_claves;
+        
     }
-    
-    public Resumen() {
-        this.titulo = "abcdefg";
-        this.autores = "";
-        this.cuerpo = "";
-        this.palabras_claves = "";
-    }
-    
 
+    public Resumen() {
+        this.titulo = null;
+        this.autores = null;
+        this.cuerpo = null;
+        this.palabras_claves = null;
+
+    }
+    
     /**
      * @return the titulo
      */

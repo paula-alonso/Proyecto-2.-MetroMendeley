@@ -4,6 +4,8 @@
  */
 package proyecto2;
 
+import java.io.File;
+
 /**
  *
  * @author alons
@@ -14,14 +16,14 @@ public class main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+
         // TODO code application logic here
-        
-        Resumen resumen = new Resumen();
+
+        File fichero = Funciones.FileChooser();
+        Resumen resumen = Funciones.LeerTxt(fichero);
         Nodo[] hashTable = Funciones.newHashTable();
         Funciones.Insert(resumen, hashTable);
-        Funciones.Insert(resumen, hashTable);
-        Funciones.Insert(resumen, hashTable);
-        int i = 0;
+        int i =0;
     }
     
 }
