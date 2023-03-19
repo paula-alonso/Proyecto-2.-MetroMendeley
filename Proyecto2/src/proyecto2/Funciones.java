@@ -108,23 +108,10 @@ public class Funciones {
     }
     
     public static int getFrecuencia(String resumen, String palabra) {
-        int frecuencia = 0;
-        String[] arr = resumen.split(" ");
-        for (int i=0;i<arr.length;i++) {
-            String first = String.valueOf(arr[i].charAt(0));
-            String last = String.valueOf(arr[i].charAt(arr[i].length()-1));
-            String alpha = "[!¡.,()|<>¿?{}\"\\\\[\\\\]]";
-           
-            if (first.matches(alpha) || first.equals("\n")) {
-                arr[i] = arr[i].replace(first, "");
-            }
-            if (last.matches(alpha) || last.equals("\n")) {
-                arr[i] = arr[i].replace(last, "");
-            }
-            if (arr[i].equalsIgnoreCase(palabra)) {
-                frecuencia += 1;
-            }
-        }
+        
+        resumen = resumen.toLowerCase();
+        String[] arr = resumen.split(palabra);
+        int frecuencia = arr.length - 1;
             
         return frecuencia;
     }
