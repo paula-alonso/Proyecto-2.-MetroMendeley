@@ -186,18 +186,13 @@ public class Funciones {
 
                  String[] datos2 = datos[1].split("Resumen");
                  autores += datos2[0];
-
-                 String[] datos3 = datos2[1].split(":");
-                 if(datos3[0].contains("\n")){
-                     datos3[0].replace("\n", "");
-                 }
-                 resumen += datos3[0];
-                 palabras_claves+= datos3[1];
-
-                 datos3 = datos2[1].split("\n");
+                 
+                 String[] datos3 = datos2[1].split("\n");
                  String[] pc = datos3[2].split(":");
                  resumen += datos3[1].trim();
                  palabras_claves+= pc[1];
+
+                 
 
                  r.setTitulo(nombre_resumen);
                  r.setAutores(autores);
