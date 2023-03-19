@@ -22,14 +22,14 @@ public class Funciones {
      * Metodo crear Hash Table
      * @return HashTable retorna el HashTable
      */
-    public static Nodo[] newHashTable() {
-        Nodo[] hashTable = new Nodo[13];
+    public static Lista[] newHashTable() {
+        Lista[] hashTable = new Lista[13];
         return hashTable;
     }
     
     
     /**
-     * Metodo retorna si ek HashTable esta vacio
+     * Metodo retorna si el HashTable esta vacio
      * @param hashTable Hash Table
      * @return vacio Toma el valor de true si esta vacio 
      */
@@ -57,11 +57,11 @@ public class Funciones {
         for (int i = 0; i<titulo.length(); i++) {
             char caracter = titulo.charAt(i);
             int caracter_ascii = caracter;
-            hash += (caracter_ascii * titulo.indexOf(caracter));
+            hash += (caracter_ascii * titulo.indexOf(caracter)); // obtiene la funcion Hash del tipo n∑ codigo ASCII * indice de letra. Ej: (101*0 + 102*1 + 103*2)
         }
         resumen.setClave(hash);
-        hash = hash%13;
-        return hash;
+        hash = hash%13; // obtiene el modulo de 13 (size del Hash Table) para determinar la posicion en el arreglo
+        return hash; 
     }
     
     /**
@@ -69,25 +69,62 @@ public class Funciones {
      * @param resumen Articulo a insertar
      * @param hashTable Hash Table
      */
-    public static void Insert(Resumen resumen, Nodo[] hashTable) {
+    public static void Insert(Resumen resumen, Lista[] hashTable) {
         
         int hash = hashFunction(resumen);
         if (hashTable[hash]==null) {
-            hashTable[hash] = new Nodo(resumen);
+            Lista<Resumen> lista = new Lista<>();
+            lista.InsertInFinal(resumen);
+            hashTable[hash] = lista;
             resumen.setPosicion(hash);
         }else{
-            Nodo aux = hashTable[hash];
-            while (aux.getpNext()!=null) {
-                aux = aux.getpNext();
-            }
-            Resumen resumen_prev = (Resumen) aux.getData();
-            if (!resumen.getTitulo().equals(resumen_prev.getTitulo())) {
-                aux.setpNext(new Nodo(resumen));
-                resumen.setPosicion(hash);
-            } else {
+            
+            if (hashTable[hash].Buscar(resumen.getTitulo())!=null) {
                 JOptionPane.showMessageDialog(null, "El artículo " + resumen.getTitulo()+ " ya se encuentra cargado");
+            } else {
+                hashTable[hash].InsertInFinal(hash);
             }
         }
+    }
+    
+    public static Nodo Buscar(int clave, Nodo[] hashTable){
+        int indice = clave%13;
+        Nodo busqueda = hashTable[indice];
+        if (busqueda!= null) {
+            if (busqueda.getpNext()!=null) {
+                Resumen resumen = (Resumen) busqueda.getData();
+                while (resumen.getClave()!=clave && busqueda.getpNext()!=null) {
+                    busqueda = busqueda.getpNext();
+                    resumen = (Resumen) busqueda.getData();
+                }
+                if (resumen.getClave()!=clave) {busqueda = null;}
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "El artículo no existe");
+        }
+        return busqueda; 
+    }
+    
+    public static int getFrecuencia(String resumen, String palabra) {
+        int frecuencia = 0;
+        String[] arr = resumen.split(" ");
+        for (int i=0;i<arr.length;i++) {
+            String first = String.valueOf(arr[i].charAt(0));
+            String last = String.valueOf(arr[i].charAt(arr[i].length()-1));
+            String alpha = "[!¡.,()|<>¿?{}\"\\\\[\\\\]]";
+           
+            if (first.matches(alpha) || first.equals("\n")) {
+                arr[i] = arr[i].replace(first, "");
+            }
+            if (last.matches(alpha) || last.equals("\n")) {
+                arr[i] = arr[i].replace(last, "");
+            }
+            if (arr[i].equalsIgnoreCase(palabra)) {
+                frecuencia += 1;
+            }
+        }
+            
+        return frecuencia;
     }
 
     
@@ -181,7 +218,7 @@ public class Funciones {
 
                  String[] datos2 = datos[1].split("Resumen");
                  autores += datos2[0];
-                 String[] datos3 = datos2[1].split("Palabras Claves:");
+                 String[] datos3 = datos2[1].split(":");
                  if(datos3[0].contains("\n")){
                      datos3[0].replace("\n", "");
                  }

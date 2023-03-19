@@ -7,8 +7,7 @@ package proyecto2;
 /**
  *
  * @author Paula Alonso y Marielena Ginez
- */
-public class Nodo<T> {
+ */ public class Nodo<T> {
     private T data;
     private Nodo<T> pNext;
     

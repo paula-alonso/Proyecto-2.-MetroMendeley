@@ -21,8 +21,11 @@ public class main {
 
         File fichero = Funciones.FileChooser();
         Resumen resumen = Funciones.LeerTxt(fichero);
-        Nodo[] hashTable = Funciones.newHashTable();
+        Lista[] hashTable = Funciones.newHashTable();
         Funciones.Insert(resumen, hashTable);
+        Funciones.Insert(resumen, hashTable);
+        Funciones.Insert(resumen, hashTable);
+        int frecuencia = Funciones.getFrecuencia(resumen.getCuerpo(), "Meyerhof");
         int i =0;
     }
     
