@@ -8,6 +8,7 @@ import java.awt.Component;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.PrintWriter;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -171,6 +172,33 @@ public class Funciones {
              return r;
 
 
+       }
+       
+     /**
+     * Metodo guardar Txt de la información cargada
+     * @param hashTable tabla de dispersión con los resumenes cargados
+     */
+     
+       public void GuardarTxt(Nodo[] hashTable){
+           String cadena = "";
+           if(!esVacio(hashTable)){
+               for (int i = 0; i<hashTable.length;i++){
+                   if(hashTable[i]!=null){
+                       Nodo<Resumen> aux = hashTable[i];
+                           while(aux!=null){
+                              cadena += aux.getData().getTitulo()+"#"+aux.getData().getAutores()+"#"+aux.getData().getCuerpo()+"#"+aux.getData().getPalabras_claves()+"\n"; 
+                              aux = aux.getpNext();
+                       }
+                   }
+               }
+           }
+           try{
+               PrintWriter pw=new PrintWriter("test\\resumen.txt");
+               pw.print(cadena);
+               JOptionPane.showMessageDialog(null, "Guardado exitoso");
+           }catch(Exception e){
+               JOptionPane.showMessageDialog(null,"Error!!!");
+           }
        }
 
 }
