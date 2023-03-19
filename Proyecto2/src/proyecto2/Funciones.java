@@ -69,24 +69,31 @@ public class Funciones {
         return hash; 
     }
     
-    public static int getIndice(String titulo) {
-        int indice = 0;
+    public static int getClave(String titulo) {
+        int clave = 0;
        
         for (int i = 0; i<titulo.length(); i++) {
             char caracter = titulo.charAt(i);
             int caracter_ascii = caracter;
-            indice += (caracter_ascii * titulo.indexOf(caracter)); // obtiene la funcion Hash del tipo n∑ codigo ASCII * indice de letra. Ej: (101*0 + 102*1 + 103*2)
+            clave += (caracter_ascii * titulo.indexOf(caracter)); // obtiene la funcion Hash del tipo n∑ codigo ASCII * indice de letra. Ej: (101*0 + 102*1 + 103*2)
         }
-        indice = indice%13; // obtiene el modulo de 13 (size del Hash Table) para determinar la posicion en el arreglo
-        return indice; 
+        return clave; 
     }
     
-    public static Resumen buscarResumen(int indice, Lista[] hashTable) {
-        Nodo aux = Menu.hashTable[indice].getFirst();
+    public static Resumen buscarResumen(int clave, int indice, Lista[] hashTable) {
+        Nodo<Resumen> aux = Menu.hashTable[indice].getFirst();
         Resumen resumen = null;
         if (aux.getpNext()!=null) {
-            resumen = (Resumen) Menu.hashTable[indice].getFirst().getData();
-        } 
+            while (aux.getpNext()!=null) {
+                aux = aux.getpNext();
+                if (aux.getData().getClave() == clave) {
+                    break;
+                }
+            }
+            resumen = aux.getData();
+        } else {
+            resumen = aux.getData();
+        }
         return resumen;
     }
     
@@ -134,6 +141,7 @@ public class Funciones {
     
     private static int getFrecuencia(String resumen, String palabra) {
         
+        palabra = palabra.toLowerCase();
         resumen = resumen.toLowerCase();
         String[] arr = resumen.split(palabra);
         int frecuencia = arr.length - 1;
@@ -156,8 +164,8 @@ public class Funciones {
     }
     
     public static String getAnalisis(Resumen resumen) {
-        String analisis = "Título: " + resumen.getTitulo() + "\nAutores: " + resumen.getAutores();
-        analisis = analisis + "Palabras clave:\n" + contarPalabras(resumen);
+        String analisis = "\bTítulo: " + resumen.getTitulo() + "\n\n\bAutores: " + resumen.getAutores();
+        analisis = analisis + "\n\bPalabras clave:\n" + contarPalabras(resumen);
         return analisis;
     }
     

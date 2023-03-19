@@ -4,10 +4,8 @@
  */
 package Ventanas;
 
-import java.io.File;
-import javax.swing.JList;
+
 import proyecto2.Funciones;
-import proyecto2.Lista;
 import proyecto2.Resumen;
 
 /**
@@ -77,6 +75,7 @@ public class AnalizarResumen extends javax.swing.JFrame {
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 600, 220));
 
+        lista.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         lista.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 listaMouseClicked(evt);
@@ -117,8 +116,8 @@ public class AnalizarResumen extends javax.swing.JFrame {
     private void listaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaMouseClicked
         // TODO add your handling code here:
         String seleccion = lista.getSelectedValue();
-        int indice = Funciones.getIndice(seleccion);
-        Resumen resumen = (Resumen) Menu.hashTable[indice].getFirst().getData();
+        int indice = Funciones.getClave(seleccion);
+        Resumen resumen = Funciones.buscarResumen(indice, indice%13, Menu.hashTable);
         String analisis = Funciones.getAnalisis(resumen);
         texto.setText(analisis);
     }//GEN-LAST:event_listaMouseClicked

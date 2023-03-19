@@ -127,6 +127,7 @@ public class Menu extends javax.swing.JFrame {
     private void analizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_analizarActionPerformed
         // TODO add your handling code here:
         resumenes = Funciones.getResumenes(hashTable);
+        resumenes.OrdenarCrec();
         titulos = resumenes.getTitulos();
         AnalizarResumen analizar_resumen = new AnalizarResumen();
         Funciones.AsignarTitulos(titulos, analizar_resumen.lista);
