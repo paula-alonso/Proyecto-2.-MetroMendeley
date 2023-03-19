@@ -4,14 +4,17 @@
  */
 package proyecto2;
 
+import Ventanas.Menu;
 import java.awt.Component;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.PrintWriter;
+import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -66,6 +69,28 @@ public class Funciones {
         return hash; 
     }
     
+    public static int getIndice(String titulo) {
+        int indice = 0;
+       
+        for (int i = 0; i<titulo.length(); i++) {
+            char caracter = titulo.charAt(i);
+            int caracter_ascii = caracter;
+            indice += (caracter_ascii * titulo.indexOf(caracter)); // obtiene la funcion Hash del tipo n∑ codigo ASCII * indice de letra. Ej: (101*0 + 102*1 + 103*2)
+        }
+        indice = indice%13; // obtiene el modulo de 13 (size del Hash Table) para determinar la posicion en el arreglo
+        return indice; 
+    }
+    
+    public static Resumen buscarResumen(int indice, Lista[] hashTable) {
+        Nodo aux = Menu.hashTable[indice].getFirst();
+        Resumen resumen = null;
+        if (aux.getpNext()!=null) {
+            resumen = (Resumen) Menu.hashTable[indice].getFirst().getData();
+        } 
+        return resumen;
+    }
+    
+    
     /**
      * Metodo insertar articulo en el HashTable
      * @param resumen Articulo a insertar
@@ -115,6 +140,7 @@ public class Funciones {
             
         return frecuencia;
     }
+
     
     public static String contarPalabras(Resumen resumen) {
         String palabras = resumen.getPalabras_claves();
@@ -127,6 +153,12 @@ public class Funciones {
         }
         
         return conteo;
+    }
+    
+    public static String getAnalisis(Resumen resumen) {
+        String analisis = "Título: " + resumen.getTitulo() + "\nAutores: " + resumen.getAutores();
+        analisis = analisis + "Palabras clave:\n" + contarPalabras(resumen);
+        return analisis;
     }
     
     public static Lista getResumenes(Lista[] hashTable) {
@@ -148,10 +180,17 @@ public class Funciones {
     }
     
     public static void AsignarTitulos(String titulos, JList lista) {
+        
         String[] array_titulos = titulos.split("\n");
         lista.setListData(array_titulos);
+        
     }
+
     
+    /**
+     * Metodo seleccionar archivo txt
+     */
+
     private static Component areaTexto;
 
     public static File FileChooser() {
@@ -159,16 +198,23 @@ public class Funciones {
      File fichero = null;
 
      JFileChooser fileChooser = new JFileChooser();
-     int seleccion = fileChooser.showSaveDialog(areaTexto);
-     if (seleccion == JFileChooser.APPROVE_OPTION)
-     {
-    fichero = fileChooser.getSelectedFile();}
+     FileNameExtensionFilter filter = new FileNameExtensionFilter(".TXT","txt");
+     fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+     fileChooser.setFileFilter(filter);
+     int seleccion = fileChooser.showOpenDialog(areaTexto);
+     if (seleccion == JFileChooser.APPROVE_OPTION){
+        fichero = fileChooser.getSelectedFile();
+        String path=fichero.getAbsolutePath();
+        if(!path.contains("txt")) {
+            JOptionPane.showMessageDialog(null, "Por favor elija un archivo del tipo txt");
+            return null;
+            }
+     }
 
      return fichero;
 
     }
-
-        
+   
     /**
      * Metodo leer Txt elegido para cargar
      * @param archivo archivo txt a cargar
