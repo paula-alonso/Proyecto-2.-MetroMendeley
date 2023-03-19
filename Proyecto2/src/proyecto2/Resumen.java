@@ -14,12 +14,14 @@ public class Resumen {
     private String cuerpo;
     private String palabras_claves;
 
-    public Resumen(String titulo, String autores, String cuerpo, String palabras_claves) {
-        this.titulo = titulo;
-        this.autores = autores;
-        this.cuerpo = cuerpo;
-        this.palabras_claves = palabras_claves;
+    public Resumen() {
+        this.titulo = null;
+        this.autores = null;
+        this.cuerpo = null;
+        this.palabras_claves = null;
     }
+
+    
 
     /**
      * @return the titulo

@@ -4,6 +4,8 @@
  */
 package proyecto2;
 
+import java.io.File;
+
 /**
  *
  * @author alons
@@ -14,7 +16,8 @@ public class main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        File fichero = Funciones.FileChooser();
+        Resumen r = Funciones.LeerTxt(fichero);
     }
     
 }
