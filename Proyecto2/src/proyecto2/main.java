@@ -21,6 +21,7 @@ public class main {
 
         File fichero = Funciones.FileChooser();
         Resumen resumen = Funciones.LeerTxt(fichero);
+        System.out.println(resumen.getTitulo()+"\n"+resumen.getAutores()+"\n"+ resumen.getCuerpo()+"\n"+resumen.getPalabras_claves());
         Nodo[] hashTable = Funciones.newHashTable();
         Funciones.Insert(resumen, hashTable);
         int i =0;
