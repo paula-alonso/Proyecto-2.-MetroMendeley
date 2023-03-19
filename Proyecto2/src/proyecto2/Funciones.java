@@ -35,7 +35,7 @@ public class Funciones {
      * @param hashTable Hash Table
      * @return vacio Toma el valor de true si esta vacio 
      */
-    public Boolean esVacio(Lista[] hashTable) {
+    public static Boolean esVacio(Lista[] hashTable) {
         
         Boolean vacio = true;
         for (Lista hashTable1 : hashTable) {
@@ -217,26 +217,32 @@ public class Funciones {
      * @param hashTable tabla de dispersión con los resumenes cargados
      */
      
-       public void GuardarTxt(Lista[] hashTable){
+       public static void GuardarTxt(Lista[] hashTable){
            String cadena = "";
            if(!esVacio(hashTable)){
                for (int i = 0; i<hashTable.length;i++){
                    if(hashTable[i]!=null){
                        Nodo<Resumen> aux = hashTable[i].getFirst();
                            while(aux!=null){
-                              cadena += aux.getData().getTitulo()+"#"+aux.getData().getAutores()+"#"+aux.getData().getCuerpo()+"#"+aux.getData().getPalabras_claves()+"\n"; 
+                              cadena += aux.getData().getTitulo()+"黎"+aux.getData().getAutores()+"黎"+aux.getData().getCuerpo()+"黎"+aux.getData().getPalabras_claves()+"|"; 
                               aux = aux.getpNext();
                        }
                    }
                }
-           }
-           try{
+               try{
                PrintWriter pw=new PrintWriter("test\\resumen.txt");
                pw.print(cadena);
+               pw.close();
                JOptionPane.showMessageDialog(null, "Guardado exitoso");
-           }catch(Exception e){
-               JOptionPane.showMessageDialog(null,"Error!!!");
+                }catch(Exception e){
+                    JOptionPane.showMessageDialog(null,"Error!!!");
+                }
+           }else{
+               JOptionPane.showMessageDialog(null, "No hay datos para guardar");
            }
+           
        }
+       
+        
 
 }

@@ -74,11 +74,11 @@ public class Buscar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void autorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autorActionPerformed
-
+        this.dispose();
     }//GEN-LAST:event_autorActionPerformed
 
     private void palabraclaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_palabraclaveActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_palabraclaveActionPerformed
 
     /**
