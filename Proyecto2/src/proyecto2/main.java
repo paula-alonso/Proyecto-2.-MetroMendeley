@@ -22,6 +22,7 @@ public class main {
         File fichero = Funciones.FileChooser();
         Resumen resumen = Funciones.LeerTxt(fichero);
         Lista[] hashTable = Funciones.newHashTable();
+        System.out.println(resumen.getTitulo()+"\n"+resumen.getAutores()+"\n"+ resumen.getCuerpo()+"\n"+resumen.getPalabras_claves());
         Funciones.Insert(resumen, hashTable);
         Funciones.Insert(resumen, hashTable);
         Funciones.Insert(resumen, hashTable);
