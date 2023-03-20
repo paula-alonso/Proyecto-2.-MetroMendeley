@@ -5,6 +5,8 @@
 package Ventanas;
 
 import java.io.File;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
 import proyecto2.Funciones;
 import proyecto2.Lista;
 import proyecto2.Resumen;
@@ -24,6 +26,8 @@ public class Menu extends javax.swing.JFrame {
     }
     public static Menu menu = new Menu();
     public static Lista[] hashTable = Funciones.newHashTable();
+    public static Lista resumenes = Funciones.getResumenes(hashTable);;
+    public static String titulos;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -101,7 +105,7 @@ public class Menu extends javax.swing.JFrame {
         jPanel1.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 530, 140));
 
         fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo.png"))); // NOI18N
-        jPanel1.add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -4, 530, 330));
+        jPanel1.add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -4, 540, 330));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 530, 330));
 
@@ -109,8 +113,9 @@ public class Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
+
         Funciones.GuardarTxt(hashTable);
-        this.dispose();
+        System.exit(0);
     }//GEN-LAST:event_salirActionPerformed
 
     private void agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarActionPerformed
@@ -123,11 +128,21 @@ public class Menu extends javax.swing.JFrame {
 
     private void analizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_analizarActionPerformed
         // TODO add your handling code here:
+        
+        titulos = resumenes.getTitulos();
+        AnalizarResumen analizar_resumen = new AnalizarResumen();
+        Funciones.AsignarTitulos(titulos, analizar_resumen.lista);
+        analizar_resumen.setVisible(true);
+        dispose();
     }//GEN-LAST:event_analizarActionPerformed
 
     private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
-        Buscar b = new Buscar();
-        b.setVisible(true);
+        if(!resumenes.isEmpty()){
+            Buscar b = new Buscar();
+            b.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(null, "No hay resumenes cargados");
+        }
     }//GEN-LAST:event_buscarActionPerformed
 
     /**

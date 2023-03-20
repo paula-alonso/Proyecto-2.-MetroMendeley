@@ -4,6 +4,12 @@
  */
 package Ventanas;
 
+import static Ventanas.Menu.hashTable;
+import proyecto2.Funciones;
+import proyecto2.Lista;
+import proyecto2.Nodo;
+import proyecto2.Resumen;
+
 /**
  *
  * @author alons
@@ -13,8 +19,25 @@ public class BuscarAutor extends javax.swing.JFrame {
     /**
      * Creates new form BuscarAutor
      */
+    
     public BuscarAutor() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        Nodo<Resumen> resumenes = (Nodo<Resumen>)Funciones.getResumenes(hashTable).getFirst();
+        String autoress = "";
+        while(resumenes!=null){
+            String[] autoresa = resumenes.getData().getAutores().split("\n");
+            for (int i = 0; i<autoresa.length;i++){
+                autoresa[i] = autoresa[i].trim();
+                if(!autoress.contains(autoresa[i])){
+                    autores.addItem(autoresa[i]);
+                    autoress+=autoresa[i]+",";
+                }
+            }
+            resumenes = resumenes.getpNext();
+        }
+//        String titulos = resumenes.getTitulos();
+        
     }
 
     /**
@@ -27,19 +50,46 @@ public class BuscarAutor extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        autores = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        buscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 140, 130, 30));
+        jPanel1.add(autores, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, 220, 30));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, 350));
+        jLabel1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel1.setText("Selecciona el autor que estas buscando");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, -1, -1));
+
+        buscar.setBackground(new java.awt.Color(255, 153, 255));
+        buscar.setFont(new java.awt.Font("Arial Unicode MS", 0, 12)); // NOI18N
+        buscar.setText("Buscar");
+        buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 210, 80, -1));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 330, 270));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
+        Lista<Resumen> res = Funciones.getResumenes(hashTable);
+        String autor = (String)autores.getSelectedItem();
+        String titulos = res.getTitulos2(autor);
+        Detalles d = new Detalles();
+        Funciones.AsignarTitulos(titulos, Detalles.lista);
+        d.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_buscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -77,7 +127,9 @@ public class BuscarAutor extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> autores;
+    private javax.swing.JButton buscar;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

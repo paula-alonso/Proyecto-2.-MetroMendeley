@@ -7,6 +7,7 @@ package Ventanas;
 import static Ventanas.Menu.hashTable;
 import java.io.File;
 import proyecto2.Funciones;
+import proyecto2.Lista;
 import proyecto2.Resumen;
 
 /**
@@ -74,6 +75,9 @@ public class Buscar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void autorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autorActionPerformed
+        
+        BuscarAutor ba = new BuscarAutor ();
+        ba.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_autorActionPerformed
 

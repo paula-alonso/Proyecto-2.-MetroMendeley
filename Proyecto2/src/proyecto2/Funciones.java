@@ -4,12 +4,15 @@
  */
 package proyecto2;
 
+import Ventanas.Menu;
 import java.awt.Component;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.PrintWriter;
+import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -66,6 +69,28 @@ public class Funciones {
         return hash; 
     }
     
+    public static int getIndice(String titulo) {
+        int indice = 0;
+       
+        for (int i = 0; i<titulo.length(); i++) {
+            char caracter = titulo.charAt(i);
+            int caracter_ascii = caracter;
+            indice += (caracter_ascii * titulo.indexOf(caracter)); // obtiene la funcion Hash del tipo n∑ codigo ASCII * indice de letra. Ej: (101*0 + 102*1 + 103*2)
+        }
+        indice = indice%13; // obtiene el modulo de 13 (size del Hash Table) para determinar la posicion en el arreglo
+        return indice; 
+    }
+    
+    public static Resumen buscarResumen(int indice, Lista[] hashTable) {
+        Nodo aux = Menu.hashTable[indice].getFirst();
+        Resumen resumen = null;
+        if (aux.getpNext()!=null) {
+            resumen = (Resumen) Menu.hashTable[indice].getFirst().getData();
+        } 
+        return resumen;
+    }
+    
+    
     /**
      * Metodo insertar articulo en el HashTable
      * @param resumen Articulo a insertar
@@ -107,7 +132,7 @@ public class Funciones {
         return busqueda; 
     }
     
-    public static int getFrecuencia(String resumen, String palabra) {
+    private static int getFrecuencia(String resumen, String palabra) {
         
         resumen = resumen.toLowerCase();
         String[] arr = resumen.split(palabra);
@@ -115,6 +140,52 @@ public class Funciones {
             
         return frecuencia;
     }
+
+    
+    public static String contarPalabras(Resumen resumen) {
+        String palabras = resumen.getPalabras_claves();
+        String[] palabra = palabras.split(",");
+        String conteo = "";
+        
+        for (int i = 0; i<palabra.length; i++) {
+            int frecuencia = Funciones.getFrecuencia(resumen.getCuerpo(), palabra[i]);
+            conteo = conteo + palabra[i] + ": " + frecuencia + "\n";
+        }
+        
+        return conteo;
+    }
+    
+    public static String getAnalisis(Resumen resumen) {
+        String analisis = "Título: " + resumen.getTitulo() + "\nAutores: " + resumen.getAutores();
+        analisis = analisis + "Palabras clave:\n" + contarPalabras(resumen);
+        return analisis;
+    }
+    
+    public static Lista getResumenes(Lista[] hashTable) {
+        
+        Lista resumenes = new Lista();
+        
+        for (int i = 0; i<hashTable.length; i++) {
+            
+            if (hashTable[i]!= null) {
+                Nodo nodo = hashTable[i].getFirst();
+                resumenes.InsertInFinal(nodo.getData());
+                while (nodo.getpNext()!=null) {
+                    nodo = nodo.getpNext();
+                    resumenes.InsertInFinal(nodo.getData());
+                }
+            }
+        }
+        return resumenes;
+    }
+    
+    public static void AsignarTitulos(String titulos, JList lista) {
+        
+        String[] array_titulos = titulos.split("\n");
+        lista.setListData(array_titulos);
+        
+    }
+
     
     /**
      * Metodo seleccionar archivo txt
@@ -183,7 +254,15 @@ public class Funciones {
                  // En el segundo arreglo lo primero siempre son los autores  y despues el resumen y palabras claves
 
                  String[] datos2 = datos[1].split("Resumen");
-                 autores += datos2[0];
+                 if(datos2[0].contains("Christian")){
+                     if(datos2[0].contains("-")){
+                        autores += datos2[0].replace("-", " ");
+                     }else{
+                         autores += datos2[0];
+                     }
+                 }else{
+                     autores += datos2[0];
+                 }
                  
                  String[] datos3 = datos2[1].split("\n");
                  String[] pc = datos3[2].split(":");
