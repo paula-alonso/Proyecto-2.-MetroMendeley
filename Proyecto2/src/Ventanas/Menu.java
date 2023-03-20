@@ -26,7 +26,7 @@ public class Menu extends javax.swing.JFrame {
     }
     public static Menu menu = new Menu();
     public static Lista[] hashTable = Funciones.newHashTable();
-    public static Lista resumenes = Funciones.getResumenes(hashTable);;
+    public static Lista resumenes;
     public static String titulos;
 
     /**
@@ -128,7 +128,9 @@ public class Menu extends javax.swing.JFrame {
 
     private void analizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_analizarActionPerformed
         // TODO add your handling code here:
-        
+
+        resumenes = Funciones.getResumenes(hashTable);
+        resumenes.OrdenarCrec();
         titulos = resumenes.getTitulos();
         AnalizarResumen analizar_resumen = new AnalizarResumen();
         Funciones.AsignarTitulos(titulos, analizar_resumen.lista);
@@ -137,6 +139,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_analizarActionPerformed
 
     private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
+        resumenes = Funciones.getResumenes(hashTable);
         if(!resumenes.isEmpty()){
             Buscar b = new Buscar();
             b.setVisible(true);

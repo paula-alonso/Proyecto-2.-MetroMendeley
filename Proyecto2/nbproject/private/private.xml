@@ -2,6 +2,7 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group>
             <file>file:/C:/Users/alons/Desktop/repo/Proyecto-2.-MetroMendeley/Proyecto2/src/proyecto2/Nodo.java</file>
             <file>file:/C:/Users/alons/Desktop/repo/Proyecto-2.-MetroMendeley/Proyecto2/src/Ventanas/BuscarAutor.java</file>
@@ -18,5 +19,8 @@
             <file>file:/C:/Users/alons/Desktop/repo/Proyecto-2.-MetroMendeley/Proyecto2/src/Ventanas/Menu.java</file>
             <file>file:/C:/Users/alons/Desktop/repo/Proyecto-2.-MetroMendeley/Proyecto2/test/resumen.txt</file>
         </group>
+=======
+        <group/>
+>>>>>>> 563d32f2411b6b4b156e50af535acf8c7b5c97f5
     </open-files>
 </project-private>

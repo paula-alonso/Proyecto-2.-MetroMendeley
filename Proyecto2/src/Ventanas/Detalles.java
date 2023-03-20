@@ -5,6 +5,7 @@
 package Ventanas;
 
 import proyecto2.Funciones;
+import proyecto2.Nodo;
 import proyecto2.Resumen;
 
 /**
@@ -83,9 +84,17 @@ public class Detalles extends javax.swing.JFrame {
 
     private void seleccionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionesActionPerformed
         String seleccion = lista.getSelectedValue();
-        int indice = Funciones.getIndice(seleccion);
-        Resumen resumen = (Resumen) Menu.hashTable[indice].getFirst().getData();
-        String detalles = resumen.Mostrar();
+        String detalles = "";
+        int indice = Funciones.getClave(seleccion)%13;
+        Nodo<Resumen> resumen = (Nodo<Resumen>) Menu.hashTable[indice].getFirst();
+        while(resumen!=null){
+            if(resumen.getData().getTitulo().equals(seleccion)){
+                Resumen r = resumen.getData();
+                detalles = r.Mostrar();
+            }
+            resumen = resumen.getpNext();
+        }
+        
         DetArtSelec das = new DetArtSelec();
         das.pantalla.setText(detalles);
         das.setVisible(true);
