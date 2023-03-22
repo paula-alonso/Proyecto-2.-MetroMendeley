@@ -126,5 +126,10 @@ public class Resumen {
         this.clave = clave;
     }
     
+    public String printResumen() {
+        String resumen = "Título: " + titulo + "\n\nAutores: " + autores + "\n" + cuerpo + "\n\nPalabras clave: " + palabras_claves;
+        return resumen;
+    }
+    
     
 }

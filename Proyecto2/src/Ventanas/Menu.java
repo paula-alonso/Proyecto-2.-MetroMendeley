@@ -6,6 +6,7 @@ package Ventanas;
 
 import java.io.File;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import proyecto2.Funciones;
 import proyecto2.Lista;
 import proyecto2.Resumen;
@@ -24,9 +25,11 @@ public class Menu extends javax.swing.JFrame {
         this.setLocationRelativeTo(null); // centrar pantalla
     }
     public static Menu menu = new Menu();
-    public static Lista[] hashTable = Funciones.newHashTable();
+    public static Lista[] hashTable = Funciones.newHashTable(13);
+    public static Lista[] hashTable2 = Funciones.newHashTable(29);
     public static Lista resumenes;
     public static String titulos;
+    public static BusquedaPalabras busqueda_palabras = new BusquedaPalabras();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -120,24 +123,31 @@ public class Menu extends javax.swing.JFrame {
         File file = Funciones.FileChooser();
         if (file!=null){
             Resumen resumen = Funciones.LeerTxt(file);
-            Funciones.Insert(resumen, hashTable);
+            
+            Funciones.Insert(resumen, hashTable, busqueda_palabras.combo_box, hashTable2);
         }
     }//GEN-LAST:event_agregarActionPerformed
 
     private void analizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_analizarActionPerformed
         // TODO add your handling code here:
-        resumenes = Funciones.getResumenes(hashTable);
-        resumenes.OrdenarCrec();
-        titulos = resumenes.getTitulos();
-        AnalizarResumen analizar_resumen = new AnalizarResumen();
-        Funciones.AsignarTitulos(titulos, analizar_resumen.lista);
-        analizar_resumen.setVisible(true);
-        dispose();
+        
+        if (Funciones.esVacio(hashTable)) {
+           JOptionPane.showMessageDialog(null, "Debe cargar al menos un (1) resumen para acceder a esta función");
+        }else {
+            resumenes = Funciones.getResumenes(hashTable);
+            resumenes.OrdenarCrec();
+            titulos = resumenes.getTitulos();
+            AnalizarResumen analizar_resumen = new AnalizarResumen();
+            Funciones.AsignarTitulos(titulos, analizar_resumen.lista);
+            AnalizarResumen.texto.setVisible(false);
+            analizar_resumen.setVisible(true);
+            dispose();
+        }
     }//GEN-LAST:event_analizarActionPerformed
 
     private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
         Buscar b = new Buscar();
-        b.setVisible(true);
+        b.setVisible(true); 
     }//GEN-LAST:event_buscarActionPerformed
 
     /**

@@ -4,11 +4,6 @@
  */
 package Ventanas;
 
-import static Ventanas.Menu.hashTable;
-import java.io.File;
-import proyecto2.Funciones;
-import proyecto2.Resumen;
-
 /**
  *
  * @author alons
@@ -37,7 +32,7 @@ public class Buscar extends javax.swing.JFrame {
         autor = new javax.swing.JButton();
         palabraclave = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -79,6 +74,8 @@ public class Buscar extends javax.swing.JFrame {
 
     private void palabraclaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_palabraclaveActionPerformed
         // TODO add your handling code here:
+        Menu.busqueda_palabras.setVisible(true);
+        dispose();
     }//GEN-LAST:event_palabraclaveActionPerformed
 
     /**

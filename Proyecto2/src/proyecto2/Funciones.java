@@ -4,13 +4,12 @@
  */
 package proyecto2;
 
-import Ventanas.Menu;
 import java.awt.Component;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.PrintWriter;
-import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -27,18 +26,18 @@ public class Funciones {
      * Metodo crear Hash Table
      * @return HashTable retorna el HashTable
      */
-    public static Lista[] newHashTable() {
-        Lista[] hashTable = new Lista[13];
+    public static Lista[] newHashTable(int size) {
+        Lista[] hashTable = new Lista[size];
         return hashTable;
     }
-    
+   
     
     /**
      * Metodo retorna si el HashTable esta vacio
      * @param hashTable Hash Table
      * @return vacio Toma el valor de true si esta vacio 
      */
-    public Boolean esVacio(Lista[] hashTable) {
+    public static Boolean esVacio(Lista[] hashTable) {
         
         Boolean vacio = true;
         for (Lista hashTable1 : hashTable) {
@@ -52,22 +51,20 @@ public class Funciones {
     
     /**
      * Metodo retornar HashFunction
-     * @param titulo El titulo del articulo
+     * @param clave La clave del articulo
      * @param resumen Objeto resumen
      * @return hash El indice del articulo en el Hash Table
      */
-    private static int hashFunction(Resumen resumen) {
-        int hash = 0;
-        String titulo = resumen.getTitulo();
-        for (int i = 0; i<titulo.length(); i++) {
-            char caracter = titulo.charAt(i);
-            int caracter_ascii = caracter;
-            hash += (caracter_ascii * titulo.indexOf(caracter)); // obtiene la funcion Hash del tipo n∑ codigo ASCII * indice de letra. Ej: (101*0 + 102*1 + 103*2)
-        }
-        resumen.setClave(hash);
-        hash = hash%13; // obtiene el modulo de 13 (size del Hash Table) para determinar la posicion en el arreglo
+    private static int hashFunction(int clave, int modulo) {
+        int hash = clave%modulo; // obtiene el modulo de 13 (size del Hash Table) para determinar la posicion en el arreglo
         return hash; 
     }
+    
+    /**
+     * Metodo retornar Clave
+     * @param titulo El titulo del articulo
+     * @return clave La clave unica del articulo
+     */
     
     public static int getClave(String titulo) {
         int clave = 0;
@@ -81,14 +78,14 @@ public class Funciones {
     }
     
     public static Resumen buscarResumen(int clave, int indice, Lista[] hashTable) {
-        Nodo<Resumen> aux = Menu.hashTable[indice].getFirst();
+        Nodo<Resumen> aux = hashTable[indice].getFirst();
         Resumen resumen = null;
         if (aux.getpNext()!=null) {
             while (aux.getpNext()!=null) {
-                aux = aux.getpNext();
                 if (aux.getData().getClave() == clave) {
                     break;
                 }
+                aux = aux.getpNext();
             }
             resumen = aux.getData();
         } else {
@@ -97,33 +94,100 @@ public class Funciones {
         return resumen;
     }
     
+    public static PalabraClave buscarPalabra(int clave, int indice, Lista[] hashTable) {
+        Nodo<PalabraClave> aux = hashTable[indice].getFirst();
+        PalabraClave palabra= null;
+        if (aux.getpNext()!=null) {
+            while (aux.getpNext()!=null) {
+                if (aux.getData().getClave() == clave) {
+                    break;
+                }
+                aux = aux.getpNext();
+            }
+            palabra = aux.getData();
+        } else {
+            palabra = aux.getData();
+        }
+        return palabra;
+    }
+    
     
     /**
      * Metodo insertar articulo en el HashTable
      * @param resumen Articulo a insertar
      * @param hashTable Hash Table
+     * @param combo
+     * @param hashTable2
      */
-    public static void Insert(Resumen resumen, Lista[] hashTable) {
+    public static void Insert(Resumen resumen, Lista[] hashTable, JComboBox combo, Lista[] hashTable2) {
         
-        int hash = hashFunction(resumen);
+        String referencia = resumen.getTitulo();
+        int modulo = hashTable.length;
+        int clave = getClave(referencia);
+        int hash = hashFunction(clave, modulo);
+        
+        /////////
+        String[] claves = resumen.getPalabras_claves().split(",");
+        
         if (hashTable[hash]==null) {
             Lista<Resumen> lista = new Lista<>();
             lista.InsertInFinal(resumen);
             hashTable[hash] = lista;
             resumen.setPosicion(hash);
-        }else{
+            resumen.setClave(clave);
+            //
+            for (int i=0; i<claves.length; i++){
+                
+                Insert2(resumen, claves[i],hashTable2);
+                combo.addItem(claves[i]);
+            }
             
+        }else{
             if (hashTable[hash].Buscar(resumen.getTitulo())!=null) {
                 JOptionPane.showMessageDialog(null, "El artículo " + resumen.getTitulo()+ " ya se encuentra cargado");
             } else {
-                hashTable[hash].InsertInFinal(hash);
+                hashTable[hash].InsertInFinal(resumen);
+                resumen.setPosicion(hash);
+                resumen.setClave(clave);
+                //
+                for (int i=0; i<claves.length; i++){
+                    Insert2(resumen, claves[i],hashTable2);
+                    combo.addItem(claves[i]);
+                }
+                
             }
         }
     }
     
-    public static Nodo Buscar(int clave, Nodo[] hashTable){
-        int indice = clave%13;
-        Nodo busqueda = hashTable[indice];
+    private static void Insert2(Resumen resumen, String palabra, Lista[] hashTable) {
+        
+        int modulo = hashTable.length;
+        int clave = getClave(palabra);
+        int hash = hashFunction(clave, modulo);
+        
+        PalabraClave palabra_clave = new PalabraClave(palabra, clave, resumen);
+        
+        if (hashTable[hash]==null) {
+            Lista<PalabraClave> lista = new Lista<>();
+            lista.InsertInFinal(palabra_clave);
+            hashTable[hash] = lista;
+            palabra_clave.setClave(clave);
+            
+            
+            
+        }else{
+            if (hashTable[hash].BuscarP(palabra_clave.getPalabra())==null) {
+                hashTable[hash].InsertInFinal(palabra_clave);
+                palabra_clave.setClave(clave);
+                
+            }
+        }
+    }
+    
+    public static Nodo Buscar(int clave, Lista[] hashTable){
+        int modulo = hashTable.length;
+        int indice = clave%modulo;
+        Nodo busqueda = hashTable[indice].getFirst();
         if (busqueda!= null) {
             if (busqueda.getpNext()!=null) {
                 Resumen resumen = (Resumen) busqueda.getData();
@@ -139,6 +203,32 @@ public class Funciones {
         return busqueda; 
     }
     
+    public static Nodo BuscarP(int clave, Lista[] hashTable){
+        int modulo = hashTable.length;
+        int indice = hashFunction(clave, modulo);
+        Nodo busqueda = hashTable[indice].getFirst();
+        if (busqueda!= null) {
+            if (busqueda.getpNext()!=null) {
+                PalabraClave palabra = (PalabraClave) busqueda.getData();
+                while (palabra.getClave()!=clave && busqueda.getpNext()!=null) {
+                    busqueda = busqueda.getpNext();
+                    palabra = (PalabraClave) busqueda.getData();
+                }
+                if (palabra.getClave()!=clave) {busqueda = null;}
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "El artículo no existe");
+        }
+        return busqueda; 
+    }
+    
+    /**
+     * Metodo obtener frecuencia de una palabra en el resumen
+     * @param resumen Resumen analizado
+     * @param palabra Palabra buscada
+     * @return frecuencia Cantidad de veces que aparece la palabra en el texto
+     */
+    
     private static int getFrecuencia(String resumen, String palabra) {
         
         palabra = palabra.toLowerCase();
@@ -149,6 +239,11 @@ public class Funciones {
         return frecuencia;
     }
 
+    /**
+     * Metodo contar todas las palabras claves de un resumen
+     * @param resumen Resumen analizado
+     * @return frecuencia Cantidad de veces que aparece cada palabra clave en el texto
+     */
     
     public static String contarPalabras(Resumen resumen) {
         String palabras = resumen.getPalabras_claves();
@@ -163,11 +258,23 @@ public class Funciones {
         return conteo;
     }
     
+    /**
+     * Metodo obtener el analisis de un resumen
+     * @param resumen Resumen analizado
+     * @return analisis Analisis del resumen
+     */
+    
     public static String getAnalisis(Resumen resumen) {
         String analisis = "\bTítulo: " + resumen.getTitulo() + "\n\n\bAutores: " + resumen.getAutores();
         analisis = analisis + "\n\bPalabras clave:\n" + contarPalabras(resumen);
         return analisis;
     }
+    
+    /**
+     * Metodo obtener una lista de resumenes
+     * @param hashTable Hash Table con todos los resumenes cargados
+     * @return resumenes Lista de resumenes
+     */
     
     public static Lista getResumenes(Lista[] hashTable) {
         
@@ -186,6 +293,12 @@ public class Funciones {
         }
         return resumenes;
     }
+    
+    /**
+     * Metodo asignar titulos de cada resumen a una JList en la interfaz
+     * @param titulos String con los titulos
+     * @param lista JList en la interfaz
+     */
     
     public static void AsignarTitulos(String titulos, JList lista) {
         
