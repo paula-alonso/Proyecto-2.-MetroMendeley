@@ -19,6 +19,8 @@ public class Buscar extends javax.swing.JFrame {
     /**
      * Creates new form Buscar
      */
+    public static BuscarAutor ba = new BuscarAutor ();
+    
     public Buscar() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -38,7 +40,7 @@ public class Buscar extends javax.swing.JFrame {
         autor = new javax.swing.JButton();
         palabraclave = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -76,7 +78,7 @@ public class Buscar extends javax.swing.JFrame {
 
     private void autorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autorActionPerformed
         
-        BuscarAutor ba = new BuscarAutor ();
+        
         ba.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_autorActionPerformed

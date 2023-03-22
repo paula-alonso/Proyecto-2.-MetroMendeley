@@ -20,6 +20,8 @@ public class BuscarAutor extends javax.swing.JFrame {
      * Creates new form BuscarAutor
      */
     
+    public static Detalles d = new Detalles();
+    
     public BuscarAutor() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -36,7 +38,6 @@ public class BuscarAutor extends javax.swing.JFrame {
             }
             resumenes = resumenes.getpNext();
         }
-//        String titulos = resumenes.getTitulos();
         
     }
 
@@ -54,7 +55,7 @@ public class BuscarAutor extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         buscar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -85,7 +86,6 @@ public class BuscarAutor extends javax.swing.JFrame {
         Lista<Resumen> res = Funciones.getResumenes(hashTable);
         String autor = (String)autores.getSelectedItem();
         String titulos = res.getTitulos2(autor);
-        Detalles d = new Detalles();
         Funciones.AsignarTitulos(titulos, Detalles.lista);
         d.setVisible(true);
         this.dispose();

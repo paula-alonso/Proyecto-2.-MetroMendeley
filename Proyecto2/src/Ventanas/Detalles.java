@@ -39,7 +39,7 @@ public class Detalles extends javax.swing.JFrame {
         volver = new javax.swing.JButton();
         fondo = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -94,14 +94,16 @@ public class Detalles extends javax.swing.JFrame {
             }
             resumen = resumen.getpNext();
         }
-        
+        this.dispose();
         DetArtSelec das = new DetArtSelec();
         das.pantalla.setText(detalles);
         das.setVisible(true);
     }//GEN-LAST:event_seleccionesActionPerformed
 
     private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
+        
         this.dispose();
+        Buscar.ba.setVisible(true);
     }//GEN-LAST:event_volverActionPerformed
 
     /**

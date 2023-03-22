@@ -34,14 +34,16 @@ public class DetArtSelec extends javax.swing.JFrame {
         volver = new javax.swing.JButton();
         fondo = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         pantalla.setEditable(false);
         pantalla.setColumns(20);
+        pantalla.setLineWrap(true);
         pantalla.setRows(5);
+        pantalla.setWrapStyleWord(true);
         jScrollPane1.setViewportView(pantalla);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, 470, 160));
@@ -70,7 +72,9 @@ public class DetArtSelec extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
+
         this.dispose();
+        BuscarAutor.d.setVisible(true);
     }//GEN-LAST:event_volverActionPerformed
 
     /**
