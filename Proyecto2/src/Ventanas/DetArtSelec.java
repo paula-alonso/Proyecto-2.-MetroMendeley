@@ -39,6 +39,7 @@ public class DetArtSelec extends javax.swing.JFrame {
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        pantalla.setEditable(false);
         pantalla.setColumns(20);
         pantalla.setRows(5);
         jScrollPane1.setViewportView(pantalla);

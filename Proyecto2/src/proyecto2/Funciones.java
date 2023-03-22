@@ -262,15 +262,9 @@ public class Funciones {
                  // En el segundo arreglo lo primero siempre son los autores  y despues el resumen y palabras claves
 
                  String[] datos2 = datos[1].split("Resumen");
-                 if(datos2[0].contains("Christian")){
-                     if(datos2[0].contains("-")){
-                        autores += datos2[0].replace("-", " ");
-                     }else{
-                         autores += datos2[0];
-                     }
-                 }else{
-                     autores += datos2[0];
-                 }
+
+                autores += datos2[0];
+                 
                  
                  String[] datos3 = datos2[1].split("\n");
                  String[] pc = datos3[2].split(":");
