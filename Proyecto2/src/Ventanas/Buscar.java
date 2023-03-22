@@ -4,6 +4,7 @@
  */
 package Ventanas;
 
+
 /**
  *
  * @author alons
@@ -13,6 +14,8 @@ public class Buscar extends javax.swing.JFrame {
     /**
      * Creates new form Buscar
      */
+    public static BuscarAutor ba = new BuscarAutor ();
+    
     public Buscar() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -69,13 +72,19 @@ public class Buscar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void autorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autorActionPerformed
-
+        
+        
+        ba.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_autorActionPerformed
 
     private void palabraclaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_palabraclaveActionPerformed
+
         // TODO add your handling code here:
         Menu.busqueda_palabras.setVisible(true);
         dispose();
+        this.dispose();
+
     }//GEN-LAST:event_palabraclaveActionPerformed
 
     /**

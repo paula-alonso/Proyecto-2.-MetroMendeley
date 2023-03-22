@@ -169,6 +169,25 @@ public class Lista<T> {
         }
         return titulos_string;
     }
+    
+    public String getTitulos2(String autores){
+        autores = autores.trim();
+        Nodo<Resumen> temp = First;
+        String titulos_string = "";
+        while(temp != null){
+            String object = temp.getData().getTitulo();
+            String[] a = temp.getData().getAutores().split("\n");
+            for(int i = 0; i<a.length;i++){
+                a[i] = a[i].trim();
+                if(autores.equals(a[i])){
+                    titulos_string += object + "\n";
+                    
+                }
+                
+            }temp = temp.getpNext();
+        }
+        return titulos_string;
+    }
 }
         
 

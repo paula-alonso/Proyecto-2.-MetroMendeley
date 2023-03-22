@@ -42,6 +42,10 @@ public class Resumen {
 
     }
     
+    public String Mostrar(){
+        return "Titulo:\n"+this.getTitulo()+"\nAutores:"+this.getAutores()+"Resumen:\n"+this.getCuerpo()+"\nPalabras claves:\n"+this.getPalabras_claves();
+    }
+    
     /**
      * @return the titulo
      */

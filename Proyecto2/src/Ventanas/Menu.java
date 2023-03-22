@@ -5,7 +5,6 @@
 package Ventanas;
 
 import java.io.File;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import proyecto2.Funciones;
 import proyecto2.Lista;
@@ -30,6 +29,7 @@ public class Menu extends javax.swing.JFrame {
     public static Lista resumenes;
     public static String titulos;
     public static BusquedaPalabras busqueda_palabras = new BusquedaPalabras();
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -115,7 +115,8 @@ public class Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
-        // TODO add your handling code here:
+
+        Funciones.GuardarTxt(hashTable);
         System.exit(0);
     }//GEN-LAST:event_salirActionPerformed
 
@@ -124,12 +125,13 @@ public class Menu extends javax.swing.JFrame {
         if (file!=null){
             Resumen resumen = Funciones.LeerTxt(file);
             
-            Funciones.Insert(resumen, hashTable, busqueda_palabras.combo_box, hashTable2);
+            Funciones.Insert(resumen, hashTable, hashTable2);
         }
     }//GEN-LAST:event_agregarActionPerformed
 
     private void analizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_analizarActionPerformed
         // TODO add your handling code here:
+
         
         if (Funciones.esVacio(hashTable)) {
            JOptionPane.showMessageDialog(null, "Debe cargar al menos un (1) resumen para acceder a esta función");
@@ -144,10 +146,17 @@ public class Menu extends javax.swing.JFrame {
             dispose();
         }
     }//GEN-LAST:event_analizarActionPerformed
+                                    
 
     private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
-        Buscar b = new Buscar();
-        b.setVisible(true); 
+        resumenes = Funciones.getResumenes(hashTable);
+        if(!resumenes.isEmpty()){
+            Buscar b = new Buscar();
+            b.setVisible(true);
+            
+        }else{
+            JOptionPane.showMessageDialog(null, "No hay resumenes cargados");
+        }
     }//GEN-LAST:event_buscarActionPerformed
 
     /**

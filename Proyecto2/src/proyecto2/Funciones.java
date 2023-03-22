@@ -4,6 +4,7 @@
  */
 package proyecto2;
 
+import Ventanas.Menu;
 import java.awt.Component;
 import java.io.BufferedReader;
 import java.io.File;
@@ -24,6 +25,7 @@ public class Funciones {
     
     /**
      * Metodo crear Hash Table
+     * @param size Tamaño del Hash Table
      * @return HashTable retorna el HashTable
      */
     public static Lista[] newHashTable(int size) {
@@ -119,7 +121,7 @@ public class Funciones {
      * @param combo
      * @param hashTable2
      */
-    public static void Insert(Resumen resumen, Lista[] hashTable, JComboBox combo, Lista[] hashTable2) {
+    public static void Insert(Resumen resumen, Lista[] hashTable, Lista[] hashTable2) {
         
         String referencia = resumen.getTitulo();
         int modulo = hashTable.length;
@@ -139,7 +141,7 @@ public class Funciones {
             for (int i=0; i<claves.length; i++){
                 
                 Insert2(resumen, claves[i],hashTable2);
-                combo.addItem(claves[i]);
+                Menu.busqueda_palabras.combo_box.addItem(claves[i]);
             }
             
         }else{
@@ -152,7 +154,7 @@ public class Funciones {
                 //
                 for (int i=0; i<claves.length; i++){
                     Insert2(resumen, claves[i],hashTable2);
-                    combo.addItem(claves[i]);
+                    Menu.busqueda_palabras.combo_box.addItem(claves[i]);
                 }
                 
             }
@@ -375,7 +377,9 @@ public class Funciones {
                  // En el segundo arreglo lo primero siempre son los autores  y despues el resumen y palabras claves
 
                  String[] datos2 = datos[1].split("Resumen");
-                 autores += datos2[0];
+
+                autores += datos2[0];
+                 
                  
                  String[] datos3 = datos2[1].split("\n");
                  String[] pc = datos3[2].split(":");
@@ -409,26 +413,32 @@ public class Funciones {
      * @param hashTable tabla de dispersión con los resumenes cargados
      */
      
-       public void GuardarTxt(Lista[] hashTable){
+       public static void GuardarTxt(Lista[] hashTable){
            String cadena = "";
            if(!esVacio(hashTable)){
                for (int i = 0; i<hashTable.length;i++){
                    if(hashTable[i]!=null){
                        Nodo<Resumen> aux = hashTable[i].getFirst();
                            while(aux!=null){
-                              cadena += aux.getData().getTitulo()+"#"+aux.getData().getAutores()+"#"+aux.getData().getCuerpo()+"#"+aux.getData().getPalabras_claves()+"\n"; 
+                              cadena += aux.getData().getTitulo()+"黎"+aux.getData().getAutores()+"黎"+aux.getData().getCuerpo()+"黎"+aux.getData().getPalabras_claves()+"|"; 
                               aux = aux.getpNext();
                        }
                    }
                }
-           }
-           try{
+               try{
                PrintWriter pw=new PrintWriter("test\\resumen.txt");
                pw.print(cadena);
+               pw.close();
                JOptionPane.showMessageDialog(null, "Guardado exitoso");
-           }catch(Exception e){
-               JOptionPane.showMessageDialog(null,"Error!!!");
+                }catch(Exception e){
+                    JOptionPane.showMessageDialog(null,"Error!!!");
+                }
+           }else{
+               JOptionPane.showMessageDialog(null, "No hay datos para guardar");
            }
+           
        }
+       
+        
 
 }
