@@ -25,19 +25,7 @@ public class BuscarAutor extends javax.swing.JFrame {
     public BuscarAutor() {
         initComponents();
         this.setLocationRelativeTo(null);
-        Nodo<Resumen> resumenes = (Nodo<Resumen>)Funciones.getResumenes(hashTable).getFirst();
-        String autoress = "";
-        while(resumenes!=null){
-            String[] autoresa = resumenes.getData().getAutores().split("\n");
-            for (int i = 0; i<autoresa.length;i++){
-                autoresa[i] = autoresa[i].trim();
-                if(!autoress.contains(autoresa[i])){
-                    autores.addItem(autoresa[i]);
-                    autoress+=autoresa[i]+",";
-                }
-            }
-            resumenes = resumenes.getpNext();
-        }
+        
         
     }
 
@@ -61,6 +49,11 @@ public class BuscarAutor extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        autores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                autoresActionPerformed(evt);
+            }
+        });
         jPanel1.add(autores, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, 220, 30));
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -90,6 +83,10 @@ public class BuscarAutor extends javax.swing.JFrame {
         d.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_buscarActionPerformed
+
+    private void autoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoresActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_autoresActionPerformed
 
     /**
      * @param args the command line arguments
@@ -127,7 +124,7 @@ public class BuscarAutor extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> autores;
+    public static javax.swing.JComboBox<String> autores;
     private javax.swing.JButton buscar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
