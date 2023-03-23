@@ -10,6 +10,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.PrintWriter;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JList;
@@ -298,32 +300,72 @@ public class Funciones {
      * @param hashTable tabla de dispersión con los resumenes cargados
      */
      
-       public static void GuardarTxt(Lista[] hashTable){
-           String cadena = "";
-           if(!esVacio(hashTable)){
-               for (int i = 0; i<hashTable.length;i++){
-                   if(hashTable[i]!=null){
-                       Nodo<Resumen> aux = hashTable[i].getFirst();
-                           while(aux!=null){
-                              cadena += aux.getData().getTitulo()+"黎"+aux.getData().getAutores()+"黎"+aux.getData().getCuerpo()+"黎"+aux.getData().getPalabras_claves()+"|"; 
-                              aux = aux.getpNext();
-                       }
-                   }
-               }
-               try{
-               PrintWriter pw=new PrintWriter("test\\resumen.txt");
-               pw.print(cadena);
-               pw.close();
-               JOptionPane.showMessageDialog(null, "Guardado exitoso");
-                }catch(Exception e){
-                    JOptionPane.showMessageDialog(null,"Error!!!");
+        public static void GuardarTxt(Lista[] hashTable){
+            String cadena = "";
+            if(!esVacio(hashTable)){
+                for (int i = 0; i<hashTable.length;i++){
+                    if(hashTable[i]!=null){
+                        Nodo<Resumen> aux = hashTable[i].getFirst();
+                            while(aux!=null){
+                               cadena += aux.getData().getTitulo()+"黎"+aux.getData().getAutores()+"黎"+aux.getData().getCuerpo()+"黎"+aux.getData().getPalabras_claves()+"|"; 
+                               aux = aux.getpNext();
+                        }
+                    }
                 }
-           }else{
-               JOptionPane.showMessageDialog(null, "No hay datos para guardar");
-           }
-           
-       }
-       
+                try{
+                    
+                    PrintWriter pw=new PrintWriter("resumenTODO.txt");
+                    pw.print(cadena);
+                    pw.close();
+                    JOptionPane.showMessageDialog(null, "Guardado exitoso");
+                 }catch(Exception e){
+                    JOptionPane.showMessageDialog(null,"Error!!!");
+                 }
+            }else{
+                JOptionPane.showMessageDialog(null, "No hay datos para guardar");
+            }
+
+        }
         
+        
+       
+        public static void Precarga(){
+            
+        File archivo= null;
+        FileReader fr=null;
+        BufferedReader br = null;
+         Resumen r = new Resumen();  
+
+         String line;
+         String resumentxt = "";
+        try {
+            Path currentRelativePath = Paths.get("resumenTODO.txt");
+            String s = currentRelativePath.toAbsolutePath().toString();
+            archivo=new File (s); //iguala archivo a la clase File que tiene el txt, se le pasa donde esta ubicado el txt
+
+            if (archivo.exists()) { //verifica que el archivo exista
+                fr=new FileReader(archivo); //necesario para leer el archivo
+                br=new BufferedReader(fr);   //necesario para leer el archivo
+                String cadenass;//string donde se guardara la informacion del txt
+                String re=""; //string donde se ira agregando la informacion del txt para luego poder ser usada 
+
+                while ((cadenass=br.readLine())!=null) { //lee hasta llegar a null que significa que se acabo el archivo
+
+                    if(!cadenass.isEmpty()) {//revisa que la linea no sea vacia
+                        re+=cadenass+"\n";
+
+                    }
+                }
+                //el !"".equals es para verificar que el string no sea solo un espacio en blanco
+                //if(!"".equals(re)) {} aqui empiezas a hacer el split
+                fr.close();//IMPORTANTE
+                br.close();//IMPORTANTE
+                System.out.println(re);
+            } else {archivo.createNewFile();} //Crea un archivo si no existe
+
+            }
+            catch (Exception e) {System.out.println("Error");}
+
+              }
 
 }
