@@ -6,7 +6,6 @@ package Ventanas;
 
 import static Ventanas.Menu.hashTable;
 import static Ventanas.Menu.hashTable2;
-import java.awt.event.ItemListener;
 import proyecto2.Funciones;
 import proyecto2.Lista;
 import proyecto2.Resumen;
@@ -26,6 +25,7 @@ public class BusquedaPalabras extends javax.swing.JFrame {
         this.setLocationRelativeTo(null); // centrar pantalla
     }
     
+    public String contenido_combobox = "";
     
 
     /**
@@ -115,10 +115,19 @@ public class BusquedaPalabras extends javax.swing.JFrame {
         String seleccion = (String) combo_box.getSelectedItem();
         int clave = Funciones.getClave(seleccion);
         int modulo = hashTable2.length;
-        Lista[] arr = hashTable2; /// prueba para monitorear el Hash Table
-        Resumen busqueda = Funciones.buscarPalabra(clave, clave%modulo, hashTable2).getResumen();
-        String resumen = busqueda.printResumen();
-        texto.setText(resumen);
+        int hash = Funciones.hashFunction(clave, modulo); 
+        
+        Lista<Resumen> busqueda = Funciones.buscarPalabra(clave, hash, hashTable2).getResumenes();
+        if (busqueda.getFirst().getpNext() ==  null) {
+            Resumen r = (Resumen) busqueda.getFirst().getData();
+            String resumen = r.printResumen();
+            texto.setText(resumen);
+        } else  {
+            BuscarTitulo bt =  new BuscarTitulo();
+            String titulos = busqueda.getTitulos();
+            Funciones.AsignarTitulos(titulos, bt.titulos);
+            bt.setVisible(true);
+        }
     }//GEN-LAST:event_buscarActionPerformed
 
     private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed

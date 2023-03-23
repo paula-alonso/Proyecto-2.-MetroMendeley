@@ -81,20 +81,20 @@ public class Buscar extends javax.swing.JFrame {
 
     private void autorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autorActionPerformed
         
-        Nodo<Resumen> resumenes = (Nodo<Resumen>)Funciones.getResumenes(hashTable).getFirst();
-        String autoress = "";
-        ba.autores.removeAllItems();
-        while(resumenes!=null){
-            String[] autoresa = resumenes.getData().getAutores().split("\n");
-            for (int i = 0; i<autoresa.length;i++){
-                autoresa[i] = autoresa[i].trim();
-                if(!autoress.contains(autoresa[i])){
-                    ba.autores.addItem(autoresa[i]);
-                    autoress+=autoresa[i]+",";
-                }
-            }
-            resumenes = resumenes.getpNext();
-        }
+        //Nodo<Resumen> resumenes = (Nodo<Resumen>)Funciones.getResumenes(hashTable).getFirst();
+        //String autoress = "";
+        //ba.autores.removeAllItems();
+        //while(resumenes!=null){
+            //String[] autoresa = resumenes.getData().getAutores().split("\n");
+            //for (int i = 0; i<autoresa.length;i++){
+               // autoresa[i] = autoresa[i].trim();
+                //if(!autoress.contains(autoresa[i])){
+                 //   ba.autores.addItem(autoresa[i]);
+                  //  autoress+=autoresa[i]+",";
+               // }
+            //}
+          //  resumenes = resumenes.getpNext();
+        //}
         ba.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_autorActionPerformed

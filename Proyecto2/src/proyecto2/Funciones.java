@@ -4,13 +4,13 @@
  */
 package proyecto2;
 
+import Ventanas.Buscar;
 import Ventanas.Menu;
 import java.awt.Component;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.PrintWriter;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -57,7 +57,7 @@ public class Funciones {
      * @param resumen Objeto resumen
      * @return hash El indice del articulo en el Hash Table
      */
-    private static int hashFunction(int clave, int modulo) {
+    public static int hashFunction(int clave, int modulo) {
         int hash = clave%modulo; // obtiene el modulo de 13 (size del Hash Table) para determinar la posicion en el arreglo
         return hash; 
     }
@@ -130,38 +130,40 @@ public class Funciones {
         
         /////////
         String[] claves = resumen.getPalabras_claves().split(",");
+        String[] autores = resumen.getAutores().trim().split("\n");
         
-        if (hashTable[hash]==null) {
-            Lista<Resumen> lista = new Lista<>();
-            lista.InsertInFinal(resumen);
-            hashTable[hash] = lista;
-            resumen.setPosicion(hash);
-            resumen.setClave(clave);
-            //
-            for (int i=0; i<claves.length; i++){
+        if (hashTable[hash]!=null && hashTable[hash].Buscar(resumen.getTitulo())!=null) {
+            JOptionPane.showMessageDialog(null, "El artículo " + resumen.getTitulo()+ " ya se encuentra cargado");
+        } else {
+            if (hashTable[hash]==null) {
+                Lista<Resumen> lista = new Lista<>();
+                lista.InsertInFinal(resumen);
+                hashTable[hash] = lista;
+                //
                 
-                Insert2(resumen, claves[i],hashTable2);
-                Menu.busqueda_palabras.combo_box.addItem(claves[i]);
+            }else{
+                hashTable[hash].InsertInFinal(resumen);
             }
             
-        }else{
-            if (hashTable[hash].Buscar(resumen.getTitulo())!=null) {
-                JOptionPane.showMessageDialog(null, "El artículo " + resumen.getTitulo()+ " ya se encuentra cargado");
-            } else {
-                hashTable[hash].InsertInFinal(resumen);
-                resumen.setPosicion(hash);
-                resumen.setClave(clave);
-                //
-                for (int i=0; i<claves.length; i++){
-                    Insert2(resumen, claves[i],hashTable2);
-                    Menu.busqueda_palabras.combo_box.addItem(claves[i]);
-                }
+            resumen.setPosicion(hash);
+            resumen.setClave(clave);
+            
+            //
+            for (int i=0; i<claves.length; i++){
+                InsertPalabra(resumen, claves[i],hashTable2);
+            }
+            
+            for (int i=0; i<autores.length; i++){
                 
+                if (!Buscar.ba.contenido_combobox.contains(autores[i])) {
+                    Buscar.ba.autores.addItem(autores[i]);
+                    Buscar.ba.contenido_combobox += autores[i] + ",";
+                }
             }
         }
     }
     
-    private static void Insert2(Resumen resumen, String palabra, Lista[] hashTable) {
+    private static void InsertPalabra(Resumen resumen, String palabra, Lista[] hashTable) {
         
         int modulo = hashTable.length;
         int clave = getClave(palabra);
@@ -169,26 +171,36 @@ public class Funciones {
         
         PalabraClave palabra_clave = new PalabraClave(palabra, clave, resumen);
         
-        if (hashTable[hash]==null) {
-            Lista<PalabraClave> lista = new Lista<>();
-            lista.InsertInFinal(palabra_clave);
-            hashTable[hash] = lista;
+        if (!Menu.busqueda_palabras.contenido_combobox.contains(palabra)) {
+            
+            Menu.busqueda_palabras.combo_box.addItem(palabra);
+            Menu.busqueda_palabras.contenido_combobox += palabra + ",";
+        
+            if (hashTable[hash]==null) {
+                Lista<Object> lista = new Lista<>();
+                lista.InsertInFinal(palabra_clave);
+                hashTable[hash] = lista;
+            }else{
+               hashTable[hash].InsertInFinal(palabra_clave);
+            }
+            
             palabra_clave.setClave(clave);
             
-            
-            
-        }else{
-            if (hashTable[hash].BuscarP(palabra_clave.getPalabra())==null) {
-                hashTable[hash].InsertInFinal(palabra_clave);
-                palabra_clave.setClave(clave);
-                
-            }
+            Lista<Resumen> resumenes = new Lista<>();
+            resumenes.InsertInFinal(resumen);
+            palabra_clave.setResumenes(resumenes);
+        
+        } else {
+            palabra_clave = (PalabraClave) BuscarP(clave, hashTable).getData();
+            Lista resumenes = palabra_clave.getResumenes();
+            resumenes.InsertInFinal(resumen);
+            palabra_clave.setResumenes(resumenes);
         }
     }
     
     public static Nodo Buscar(int clave, Lista[] hashTable){
         int modulo = hashTable.length;
-        int indice = clave%modulo;
+        int indice = hashFunction(clave, modulo);
         Nodo busqueda = hashTable[indice].getFirst();
         if (busqueda!= null) {
             if (busqueda.getpNext()!=null) {
@@ -308,7 +320,7 @@ public class Funciones {
         lista.setListData(array_titulos);
         
     }
-
+    
     
     /**
      * Metodo seleccionar archivo txt

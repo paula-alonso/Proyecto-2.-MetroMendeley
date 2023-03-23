@@ -13,11 +13,13 @@ public class PalabraClave {
     private String palabra;
     private int clave;
     private Resumen resumen;
+    private Lista<Resumen> resumenes;
 
     public PalabraClave(String palabra, int clave, Resumen resumen) {
         this.palabra = palabra;
         this.clave = clave;
         this.resumen = resumen;
+        this.resumenes = new Lista<>();
     }
 
     /**
@@ -60,6 +62,20 @@ public class PalabraClave {
      */
     public void setResumen(Resumen resumen) {
         this.resumen = resumen;
+    }
+
+    /**
+     * @return the resumenes
+     */
+    public Lista<Resumen> getResumenes() {
+        return resumenes;
+    }
+
+    /**
+     * @param resumenes the resumenes to set
+     */
+    public void setResumenes(Lista<Resumen> resumenes) {
+        this.resumenes = resumenes;
     }
     
 }

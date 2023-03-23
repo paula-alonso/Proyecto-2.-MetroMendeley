@@ -123,8 +123,10 @@ public class AnalizarResumen extends javax.swing.JFrame {
         // TODO add your handling code here:
         AnalizarResumen.texto.setVisible(true);
         String seleccion = lista.getSelectedValue();
-        int indice = Funciones.getClave(seleccion);
-        Resumen resumen = Funciones.buscarResumen(indice, indice%13, Menu.hashTable);
+        int clave = Funciones.getClave(seleccion);
+        int modulo = Menu.hashTable.length;
+        int hash = Funciones.hashFunction(clave, modulo);
+        Resumen resumen = Funciones.buscarResumen(clave, hash, Menu.hashTable);
         String analisis = Funciones.getAnalisis(resumen);
         texto.setText(analisis);
     }//GEN-LAST:event_listaMouseClicked
