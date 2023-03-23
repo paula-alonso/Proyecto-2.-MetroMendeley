@@ -5,7 +5,6 @@
 package Ventanas;
 
 import java.io.File;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import proyecto2.Funciones;
 import proyecto2.Lista;
@@ -25,9 +24,11 @@ public class Menu extends javax.swing.JFrame {
         this.setLocationRelativeTo(null); // centrar pantalla
     }
     public static Menu menu = new Menu();
-    public static Lista[] hashTable = Funciones.newHashTable();
+    public static Lista[] hashTable = Funciones.newHashTable(13);
+    public static Lista[] hashTable2 = Funciones.newHashTable(29);
     public static Lista resumenes;
     public static String titulos;
+    public static BusquedaPalabras busqueda_palabras = new BusquedaPalabras();
 
 
     /**
@@ -45,6 +46,7 @@ public class Menu extends javax.swing.JFrame {
         analizar = new javax.swing.JButton();
         buscar = new javax.swing.JButton();
         Header = new javax.swing.JPanel();
+        yareg = new javax.swing.JButton();
         fondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -105,6 +107,17 @@ public class Menu extends javax.swing.JFrame {
 
         jPanel1.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 530, 140));
 
+        yareg.setBackground(new java.awt.Color(255, 153, 255));
+        yareg.setFont(new java.awt.Font("Arial Unicode MS", 0, 12)); // NOI18N
+        yareg.setText("<html><p>Cargar resumenes</p><p>ya registrados</p></html>");
+        yareg.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        yareg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                yaregActionPerformed(evt);
+            }
+        });
+        jPanel1.add(yareg, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 130, 40));
+
         fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo.png"))); // NOI18N
         jPanel1.add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -4, 540, 330));
 
@@ -123,31 +136,44 @@ public class Menu extends javax.swing.JFrame {
         File file = Funciones.FileChooser();
         if (file!=null){
             Resumen resumen = Funciones.LeerTxt(file);
-            Funciones.Insert(resumen, hashTable);
+            
+            Funciones.Insert(resumen, hashTable, hashTable2);
         }
     }//GEN-LAST:event_agregarActionPerformed
 
     private void analizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_analizarActionPerformed
         // TODO add your handling code here:
 
-        resumenes = Funciones.getResumenes(hashTable);
-        resumenes.OrdenarCrec();
-        titulos = resumenes.getTitulos();
-        AnalizarResumen analizar_resumen = new AnalizarResumen();
-        Funciones.AsignarTitulos(titulos, analizar_resumen.lista);
-        analizar_resumen.setVisible(true);
-        dispose();
+        
+        if (Funciones.esVacio(hashTable)) {
+           JOptionPane.showMessageDialog(null, "Debe cargar al menos un (1) resumen para acceder a esta función");
+        }else {
+            resumenes = Funciones.getResumenes(hashTable);
+            resumenes.OrdenarCrec();
+            titulos = resumenes.getTitulos();
+            AnalizarResumen analizar_resumen = new AnalizarResumen();
+            Funciones.AsignarTitulos(titulos, analizar_resumen.lista);
+            AnalizarResumen.texto.setVisible(false);
+            analizar_resumen.setVisible(true);
+            dispose();
+        }
     }//GEN-LAST:event_analizarActionPerformed
+                                    
 
     private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
         resumenes = Funciones.getResumenes(hashTable);
         if(!resumenes.isEmpty()){
             Buscar b = new Buscar();
             b.setVisible(true);
+            
         }else{
             JOptionPane.showMessageDialog(null, "No hay resumenes cargados");
         }
     }//GEN-LAST:event_buscarActionPerformed
+
+    private void yaregActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yaregActionPerformed
+        Funciones.Precarga(hashTable, hashTable2);
+    }//GEN-LAST:event_yaregActionPerformed
 
     /**
      * @param args the command line arguments
@@ -198,5 +224,6 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JLabel fondo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton salir;
+    private javax.swing.JButton yareg;
     // End of variables declaration//GEN-END:variables
 }

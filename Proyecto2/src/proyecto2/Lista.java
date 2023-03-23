@@ -117,6 +117,21 @@ public class Lista<T> {
         return null;
     }
     
+    public PalabraClave BuscarP(String palabra){
+        Nodo<PalabraClave> temp = First;
+        if(this.isEmpty()){
+        
+        }else{
+        for (int i = 0; i < this.getSize(); i++) {
+            if (temp.getData().getPalabra().equalsIgnoreCase(palabra)){
+                return temp.getData();
+            }
+            temp = temp.getpNext();
+        }
+        }
+        return null;
+    }
+    
     public void OrdenarCrec(){
         
         if (!isEmpty()){

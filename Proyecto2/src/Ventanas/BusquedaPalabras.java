@@ -4,23 +4,29 @@
  */
 package Ventanas;
 
-
+import static Ventanas.Menu.hashTable;
+import static Ventanas.Menu.hashTable2;
+import java.awt.event.ItemListener;
 import proyecto2.Funciones;
+import proyecto2.Lista;
 import proyecto2.Resumen;
+
 
 /**
  *
  * @author alons
  */
-public class AnalizarResumen extends javax.swing.JFrame {
+public class BusquedaPalabras extends javax.swing.JFrame {
 
     /**
      * Creates new form Menu
      */
-    public AnalizarResumen() {
+    public BusquedaPalabras() {
         initComponents();
         this.setLocationRelativeTo(null); // centrar pantalla
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -32,19 +38,53 @@ public class AnalizarResumen extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        volver = new javax.swing.JButton();
+        buscar = new javax.swing.JButton();
         Header2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         texto = new javax.swing.JTextArea();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        lista = new javax.swing.JList<>();
+        volver = new javax.swing.JButton();
+        combo_box = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
         fondo = new javax.swing.JLabel();
-        salir1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        buscar.setBackground(new java.awt.Color(255, 153, 255));
+        buscar.setFont(new java.awt.Font("Arial Unicode MS", 0, 12)); // NOI18N
+        buscar.setText("Buscar");
+        buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 190, -1));
+
+        javax.swing.GroupLayout Header2Layout = new javax.swing.GroupLayout(Header2);
+        Header2.setLayout(Header2Layout);
+        Header2Layout.setHorizontalGroup(
+            Header2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 130, Short.MAX_VALUE)
+        );
+        Header2Layout.setVerticalGroup(
+            Header2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+
+        jPanel1.add(Header2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 130, 30));
+
+        texto.setEditable(false);
+        texto.setColumns(20);
+        texto.setLineWrap(true);
+        texto.setRows(5);
+        texto.setWrapStyleWord(true);
+        texto.setSelectedTextColor(new java.awt.Color(153, 0, 153));
+        texto.setSelectionColor(new java.awt.Color(255, 204, 255));
+        jScrollPane2.setViewportView(texto);
+
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 70, 400, 390));
 
         volver.setBackground(new java.awt.Color(255, 153, 255));
         volver.setFont(new java.awt.Font("Arial Unicode MS", 0, 12)); // NOI18N
@@ -54,80 +94,38 @@ public class AnalizarResumen extends javax.swing.JFrame {
                 volverActionPerformed(evt);
             }
         });
-        jPanel1.add(volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 460, 130, -1));
+        jPanel1.add(volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 480, 130, -1));
 
-        javax.swing.GroupLayout Header2Layout = new javax.swing.GroupLayout(Header2);
-        Header2.setLayout(Header2Layout);
-        Header2Layout.setHorizontalGroup(
-            Header2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        Header2Layout.setVerticalGroup(
-            Header2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+        jPanel1.add(combo_box, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 210, 30));
 
-        jPanel1.add(Header2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 130, 30));
-
-        texto.setEditable(false);
-        texto.setColumns(20);
-        texto.setRows(5);
-        texto.setDisabledTextColor(new java.awt.Color(255, 153, 255));
-        texto.setSelectedTextColor(new java.awt.Color(153, 0, 153));
-        texto.setSelectionColor(new java.awt.Color(255, 204, 255));
-        jScrollPane2.setViewportView(texto);
-
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 600, 220));
-
-        lista.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        lista.setSelectionBackground(new java.awt.Color(255, 204, 255));
-        lista.setSelectionForeground(new java.awt.Color(153, 0, 153));
-        lista.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                listaMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(lista);
-
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 590, 120));
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setText("Palabra clave");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 80, -1));
 
         fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo.png"))); // NOI18N
-        jPanel1.add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -4, 680, 530));
+        jPanel1.add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -4, 680, 540));
 
-        salir1.setBackground(new java.awt.Color(255, 153, 255));
-        salir1.setFont(new java.awt.Font("Arial Unicode MS", 0, 12)); // NOI18N
-        salir1.setText("Volver");
-        salir1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                salir1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(salir1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 460, 130, -1));
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 680, 530));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 680, 540));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
+        // TODO add your handling code here:
+        String seleccion = (String) combo_box.getSelectedItem();
+        int clave = Funciones.getClave(seleccion);
+        int modulo = hashTable2.length;
+        Lista[] arr = hashTable2; /// prueba para monitorear el Hash Table
+        Resumen busqueda = Funciones.buscarPalabra(clave, clave%modulo, hashTable2).getResumen();
+        String resumen = busqueda.printResumen();
+        texto.setText(resumen);
+    }//GEN-LAST:event_buscarActionPerformed
 
     private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
         // TODO add your handling code here:
         dispose();
         Menu.menu.setVisible(true);
     }//GEN-LAST:event_volverActionPerformed
-
-    private void salir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salir1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_salir1ActionPerformed
-
-    private void listaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaMouseClicked
-        // TODO add your handling code here:
-        AnalizarResumen.texto.setVisible(true);
-        String seleccion = lista.getSelectedValue();
-        int indice = Funciones.getClave(seleccion);
-        Resumen resumen = Funciones.buscarResumen(indice, indice%13, Menu.hashTable);
-        String analisis = Funciones.getAnalisis(resumen);
-        texto.setText(analisis);
-    }//GEN-LAST:event_listaMouseClicked
 
     /**
      * @param args the command line arguments
@@ -146,14 +144,16 @@ public class AnalizarResumen extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AnalizarResumen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BusquedaPalabras.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AnalizarResumen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BusquedaPalabras.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AnalizarResumen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BusquedaPalabras.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AnalizarResumen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BusquedaPalabras.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
@@ -171,12 +171,12 @@ public class AnalizarResumen extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private static javax.swing.JPanel Header2;
+    private javax.swing.JButton buscar;
+    public javax.swing.JComboBox<String> combo_box;
     private javax.swing.JLabel fondo;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    public javax.swing.JList<String> lista;
-    private javax.swing.JButton salir1;
     public static javax.swing.JTextArea texto;
     private javax.swing.JButton volver;
     // End of variables declaration//GEN-END:variables

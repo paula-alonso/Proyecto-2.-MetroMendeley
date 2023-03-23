@@ -10,7 +10,7 @@ import proyecto2.Resumen;
 
 /**
  *
- * @author alons
+ * @author Paula Alonso y Marielena Ginez
  */
 public class Detalles extends javax.swing.JFrame {
 

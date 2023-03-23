@@ -21,11 +21,11 @@ public class main {
         String key;
 
         // TODO code application logic here
+
         
         Path currentRelativePath = Paths.get("test");
         String s = currentRelativePath.toAbsolutePath().toString();
         System.out.println("Current absolute path is: " + s);
-        Funciones.Precarga();
 //        File fichero = Funciones.FileChooser();
 //        Resumen resumen = Funciones.LeerTxt(fichero);
 //        Lista[] hashTable = Funciones.newHashTable();
@@ -37,6 +37,8 @@ public class main {
 //        resumenes.OrdenarCrec();
 //        String titulos = resumenes.getTitulos();
 //        int i = 0;
+
+
     }
     
 }

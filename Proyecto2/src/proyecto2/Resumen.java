@@ -42,6 +42,7 @@ public class Resumen {
 
     }
     
+    
     public String Mostrar(){
         return "Titulo:\n"+this.getTitulo()+"\nAutores:"+this.getAutores()+"Resumen:\n"+this.getCuerpo()+"\nPalabras claves:\n"+this.getPalabras_claves();
     }
@@ -128,6 +129,11 @@ public class Resumen {
      */
     public void setClave(int clave) {
         this.clave = clave;
+    }
+    
+    public String printResumen() {
+        String resumen = "Título: " + titulo + "\n\nAutores: " + autores + "\n" + cuerpo + "\n\nPalabras clave: " + palabras_claves;
+        return resumen;
     }
     
     

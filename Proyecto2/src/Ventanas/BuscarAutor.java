@@ -12,7 +12,7 @@ import proyecto2.Resumen;
 
 /**
  *
- * @author alons
+ * @author Paula Alonso y Marielena Ginez
  */
 public class BuscarAutor extends javax.swing.JFrame {
 
@@ -23,6 +23,7 @@ public class BuscarAutor extends javax.swing.JFrame {
     public static Detalles d = new Detalles();
     
     public BuscarAutor() {
+        
         initComponents();
         this.setLocationRelativeTo(null);
         
@@ -42,6 +43,7 @@ public class BuscarAutor extends javax.swing.JFrame {
         autores = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         buscar = new javax.swing.JButton();
+        volver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -68,7 +70,17 @@ public class BuscarAutor extends javax.swing.JFrame {
                 buscarActionPerformed(evt);
             }
         });
-        jPanel1.add(buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 210, 80, -1));
+        jPanel1.add(buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 210, 80, -1));
+
+        volver.setBackground(new java.awt.Color(255, 153, 255));
+        volver.setFont(new java.awt.Font("Arial Unicode MS", 0, 12)); // NOI18N
+        volver.setText("volver");
+        volver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                volverActionPerformed(evt);
+            }
+        });
+        jPanel1.add(volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 210, 80, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 330, 270));
 
@@ -87,6 +99,10 @@ public class BuscarAutor extends javax.swing.JFrame {
     private void autoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoresActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_autoresActionPerformed
+
+    private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_volverActionPerformed
 
     /**
      * @param args the command line arguments
@@ -128,5 +144,6 @@ public class BuscarAutor extends javax.swing.JFrame {
     private javax.swing.JButton buscar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton volver;
     // End of variables declaration//GEN-END:variables
 }

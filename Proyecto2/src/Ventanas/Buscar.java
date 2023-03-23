@@ -4,12 +4,14 @@
  */
 package Ventanas;
 
+
 import static Ventanas.Menu.hashTable;
 import java.io.File;
 import proyecto2.Funciones;
 import proyecto2.Lista;
 import proyecto2.Nodo;
 import proyecto2.Resumen;
+
 
 /**
  *
@@ -98,7 +100,12 @@ public class Buscar extends javax.swing.JFrame {
     }//GEN-LAST:event_autorActionPerformed
 
     private void palabraclaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_palabraclaveActionPerformed
+
+        // TODO add your handling code here:
+        Menu.busqueda_palabras.setVisible(true);
+        dispose();
         this.dispose();
+
     }//GEN-LAST:event_palabraclaveActionPerformed
 
     /**

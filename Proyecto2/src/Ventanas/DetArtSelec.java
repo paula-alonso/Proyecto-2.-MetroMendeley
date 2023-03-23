@@ -6,7 +6,7 @@ package Ventanas;
 
 /**
  *
- * @author alons
+ * @author Paula Alonso y Marielena Ginez
  */
 public class DetArtSelec extends javax.swing.JFrame {
 
