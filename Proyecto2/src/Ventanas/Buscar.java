@@ -5,14 +5,6 @@
 package Ventanas;
 
 
-import static Ventanas.Menu.hashTable;
-import java.io.File;
-import proyecto2.Funciones;
-import proyecto2.Lista;
-import proyecto2.Nodo;
-import proyecto2.Resumen;
-
-
 /**
  *
  * @author alons
@@ -57,6 +49,7 @@ public class Buscar extends javax.swing.JFrame {
         autor.setBackground(new java.awt.Color(255, 153, 255));
         autor.setFont(new java.awt.Font("Arial Unicode MS", 0, 12)); // NOI18N
         autor.setText("Por autor");
+        autor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         autor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 autorActionPerformed(evt);
@@ -67,6 +60,7 @@ public class Buscar extends javax.swing.JFrame {
         palabraclave.setBackground(new java.awt.Color(255, 153, 255));
         palabraclave.setFont(new java.awt.Font("Arial Unicode MS", 0, 12)); // NOI18N
         palabraclave.setText("Por palabra clave");
+        palabraclave.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         palabraclave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 palabraclaveActionPerformed(evt);

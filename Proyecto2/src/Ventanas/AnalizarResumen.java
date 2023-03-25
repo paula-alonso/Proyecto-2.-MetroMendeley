@@ -5,6 +5,7 @@
 package Ventanas;
 
 
+import static Ventanas.Menu.hashTable;
 import proyecto2.Funciones;
 import proyecto2.Resumen;
 
@@ -49,6 +50,7 @@ public class AnalizarResumen extends javax.swing.JFrame {
         volver.setBackground(new java.awt.Color(255, 153, 255));
         volver.setFont(new java.awt.Font("Arial Unicode MS", 0, 12)); // NOI18N
         volver.setText("Volver");
+        volver.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         volver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 volverActionPerformed(evt);
@@ -71,7 +73,9 @@ public class AnalizarResumen extends javax.swing.JFrame {
 
         texto.setEditable(false);
         texto.setColumns(20);
+        texto.setLineWrap(true);
         texto.setRows(5);
+        texto.setWrapStyleWord(true);
         texto.setDisabledTextColor(new java.awt.Color(255, 153, 255));
         texto.setSelectedTextColor(new java.awt.Color(153, 0, 153));
         texto.setSelectionColor(new java.awt.Color(255, 204, 255));
@@ -80,6 +84,7 @@ public class AnalizarResumen extends javax.swing.JFrame {
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 600, 220));
 
         lista.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lista.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lista.setSelectionBackground(new java.awt.Color(255, 204, 255));
         lista.setSelectionForeground(new java.awt.Color(153, 0, 153));
         lista.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -121,12 +126,12 @@ public class AnalizarResumen extends javax.swing.JFrame {
 
     private void listaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaMouseClicked
         // TODO add your handling code here:
-        AnalizarResumen.texto.setVisible(true);
+        
         String seleccion = lista.getSelectedValue();
         int clave = Funciones.getClave(seleccion);
-        int modulo = Menu.hashTable.length;
+        int modulo = hashTable.length;
         int hash = Funciones.hashFunction(clave, modulo);
-        Resumen resumen = Funciones.buscarResumen(clave, hash, Menu.hashTable);
+        Resumen resumen = hashTable[hash].buscarResumen(seleccion);
         String analisis = Funciones.getAnalisis(resumen);
         texto.setText(analisis);
     }//GEN-LAST:event_listaMouseClicked

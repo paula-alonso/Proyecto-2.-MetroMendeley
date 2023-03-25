@@ -4,7 +4,9 @@
  */
 package Ventanas;
 
+import static Ventanas.Menu.hashTable;
 import proyecto2.Funciones;
+import static proyecto2.Funciones.hashFunction;
 import proyecto2.Nodo;
 import proyecto2.Resumen;
 
@@ -44,8 +46,8 @@ public class Detalles extends javax.swing.JFrame {
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lista.setSelectionBackground(new java.awt.Color(255, 204, 204));
-        lista.setSelectionForeground(new java.awt.Color(0, 0, 0));
+        lista.setSelectionBackground(new java.awt.Color(255, 204, 255));
+        lista.setSelectionForeground(new java.awt.Color(153, 0, 153));
         jScrollPane2.setViewportView(lista);
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, 570, 110));
@@ -57,6 +59,7 @@ public class Detalles extends javax.swing.JFrame {
         selecciones.setBackground(new java.awt.Color(255, 153, 255));
         selecciones.setFont(new java.awt.Font("Arial Unicode MS", 0, 12)); // NOI18N
         selecciones.setText("Seleccionar");
+        selecciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         selecciones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 seleccionesActionPerformed(evt);
@@ -67,6 +70,7 @@ public class Detalles extends javax.swing.JFrame {
         volver.setBackground(new java.awt.Color(255, 153, 255));
         volver.setFont(new java.awt.Font("Arial Unicode MS", 0, 12)); // NOI18N
         volver.setText("Volver");
+        volver.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         volver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 volverActionPerformed(evt);
@@ -85,15 +89,9 @@ public class Detalles extends javax.swing.JFrame {
     private void seleccionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionesActionPerformed
         String seleccion = lista.getSelectedValue();
         String detalles = "";
-        int indice = Funciones.getClave(seleccion)%13;
-        Nodo<Resumen> resumen = (Nodo<Resumen>) Menu.hashTable[indice].getFirst();
-        while(resumen!=null){
-            if(resumen.getData().getTitulo().equals(seleccion)){
-                Resumen r = resumen.getData();
-                detalles = r.Mostrar();
-            }
-            resumen = resumen.getpNext();
-        }
+        int hash = hashFunction(Funciones.getClave(seleccion), hashTable.length);
+        Resumen resumen = hashTable[hash].buscarResumen(seleccion);
+        detalles = resumen.mostrarResumen();
         this.dispose();
         DetArtSelec das = new DetArtSelec();
         das.pantalla.setText(detalles);

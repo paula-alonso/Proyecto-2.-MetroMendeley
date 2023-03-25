@@ -44,6 +44,8 @@ public class DetArtSelec extends javax.swing.JFrame {
         pantalla.setLineWrap(true);
         pantalla.setRows(5);
         pantalla.setWrapStyleWord(true);
+        pantalla.setSelectedTextColor(new java.awt.Color(153, 0, 153));
+        pantalla.setSelectionColor(new java.awt.Color(255, 204, 255));
         jScrollPane1.setViewportView(pantalla);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, 470, 160));
@@ -56,6 +58,7 @@ public class DetArtSelec extends javax.swing.JFrame {
         volver.setBackground(new java.awt.Color(255, 153, 255));
         volver.setFont(new java.awt.Font("Arial Unicode MS", 0, 12)); // NOI18N
         volver.setText("Cerrar");
+        volver.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         volver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 volverActionPerformed(evt);

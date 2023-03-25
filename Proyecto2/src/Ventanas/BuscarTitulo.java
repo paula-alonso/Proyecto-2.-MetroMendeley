@@ -7,7 +7,6 @@ package Ventanas;
 import static Ventanas.Menu.hashTable;
 import javax.swing.JOptionPane;
 import proyecto2.Funciones;
-import proyecto2.Lista;
 import proyecto2.Resumen;
 
 /**
@@ -56,6 +55,7 @@ public class BuscarTitulo extends javax.swing.JFrame {
         buscar.setBackground(new java.awt.Color(255, 153, 255));
         buscar.setFont(new java.awt.Font("Arial Unicode MS", 0, 12)); // NOI18N
         buscar.setText("Buscar");
+        buscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buscarActionPerformed(evt);
@@ -67,8 +67,9 @@ public class BuscarTitulo extends javax.swing.JFrame {
         jScrollPane1.setForeground(new java.awt.Color(255, 153, 255));
 
         titulos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        titulos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         titulos.setSelectionBackground(new java.awt.Color(255, 204, 255));
-        titulos.setSelectionForeground(new java.awt.Color(204, 0, 204));
+        titulos.setSelectionForeground(new java.awt.Color(153, 0, 153));
         jScrollPane1.setViewportView(titulos);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 510, -1));
@@ -87,10 +88,10 @@ public class BuscarTitulo extends javax.swing.JFrame {
         
         if (seleccion!=null) {
             int clave = Funciones.getClave(seleccion);
-            int modulo = Menu.hashTable.length;
+            int modulo = hashTable.length;
             int hash = Funciones.hashFunction(clave, modulo);
-            Resumen resumen = Funciones.buscarResumen(clave, hash, Menu.hashTable);
-            String resumen_string = resumen.printResumen();
+            Resumen resumen = hashTable[hash].buscarResumen(seleccion);
+            String resumen_string = resumen.mostrarResumen();
             BusquedaPalabras.texto.setText(resumen_string);
             this.dispose();
         } else {

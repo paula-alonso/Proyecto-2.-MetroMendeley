@@ -55,6 +55,7 @@ public class BusquedaPalabras extends javax.swing.JFrame {
         buscar.setBackground(new java.awt.Color(255, 153, 255));
         buscar.setFont(new java.awt.Font("Arial Unicode MS", 0, 12)); // NOI18N
         buscar.setText("Buscar");
+        buscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buscarActionPerformed(evt);
@@ -73,7 +74,7 @@ public class BusquedaPalabras extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        jPanel1.add(Header2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 130, 30));
+        jPanel1.add(Header2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 130, 30));
 
         texto.setEditable(false);
         texto.setColumns(20);
@@ -89,6 +90,7 @@ public class BusquedaPalabras extends javax.swing.JFrame {
         volver.setBackground(new java.awt.Color(255, 153, 255));
         volver.setFont(new java.awt.Font("Arial Unicode MS", 0, 12)); // NOI18N
         volver.setText("Volver");
+        volver.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         volver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 volverActionPerformed(evt);
@@ -96,6 +98,7 @@ public class BusquedaPalabras extends javax.swing.JFrame {
         });
         jPanel1.add(volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 480, 130, -1));
 
+        combo_box.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel1.add(combo_box, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 210, 30));
 
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
@@ -117,10 +120,10 @@ public class BusquedaPalabras extends javax.swing.JFrame {
         int modulo = hashTable2.length;
         int hash = Funciones.hashFunction(clave, modulo); 
         
-        Lista<Resumen> busqueda = Funciones.buscarPalabra(clave, hash, hashTable2).getResumenes();
+        Lista<Resumen> busqueda = hashTable2[hash].buscarPalabra(seleccion).getResumenes();
         if (busqueda.getFirst().getpNext() ==  null) {
             Resumen r = (Resumen) busqueda.getFirst().getData();
-            String resumen = r.printResumen();
+            String resumen = r.mostrarResumen();
             texto.setText(resumen);
         } else  {
             BuscarTitulo bt =  new BuscarTitulo();
@@ -179,7 +182,7 @@ public class BusquedaPalabras extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private static javax.swing.JPanel Header2;
+    public static javax.swing.JPanel Header2;
     private javax.swing.JButton buscar;
     public javax.swing.JComboBox<String> combo_box;
     private javax.swing.JLabel fondo;

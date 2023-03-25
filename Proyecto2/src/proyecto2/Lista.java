@@ -13,12 +13,19 @@ public class Lista<T> {
     private Nodo Last;
     private int size;
 
+    /**
+     * Metodo constructor
+     */
     public Lista() {
         this.First = null;
         this.Last = null;
         this.size = 0;
     }
     
+    /**
+     * Metodo verifica si la lista esta vacia
+     * @return true si la lista esta vacia
+     */
     public boolean isEmpty(){
         return getFirst() == null;
     }
@@ -102,36 +109,55 @@ public class Lista<T> {
         }
     }
     
-    public Resumen Buscar(String titulo){
+    /**
+     * Metodo para buscar un resumen en una posicion del hashtable
+     * @param titulo del resumen
+     * @return resumen encontrado
+     */
+    
+    public Resumen buscarResumen(String titulo){
         Nodo<Resumen> temp = First;
-        if(this.isEmpty()){
-        
-        }else{
-        for (int i = 0; i < this.getSize(); i++) {
-            if (temp.getData().getTitulo().equalsIgnoreCase(titulo)){
+        if(!this.isEmpty()){
+            if (temp.getpNext()==null) {
                 return temp.getData();
+            } else {
+                while (temp!=null) {
+                    if (temp.getData().getTitulo().equalsIgnoreCase(titulo)){
+                        return temp.getData();
+                    }
+                    temp = temp.getpNext();
+                }
             }
-            temp = temp.getpNext();
-        }
         }
         return null;
     }
     
-    public PalabraClave BuscarP(String palabra){
+    /**
+     * Metodo para buscar una palabra en una posicion del hashtable
+     * @param palabra clave
+     * @return palabra encontrada
+     */
+    
+    public PalabraClave buscarPalabra(String palabra){
         Nodo<PalabraClave> temp = First;
-        if(this.isEmpty()){
-        
-        }else{
-        for (int i = 0; i < this.getSize(); i++) {
-            if (temp.getData().getPalabra().equalsIgnoreCase(palabra)){
+        if(!this.isEmpty()){
+            if (temp.getpNext()==null) {
                 return temp.getData();
+            } else {
+                while (temp !=null) {
+                    if (temp.getData().getPalabra().equalsIgnoreCase(palabra)){
+                        return temp.getData();
+                    }
+                    temp = temp.getpNext();
+                }
             }
-            temp = temp.getpNext();
-        }
         }
         return null;
     }
     
+    /**
+     * Metodo para ordenar la lista alfabeticamente
+     */
     public void OrdenarCrec(){
         
         if (!isEmpty()){

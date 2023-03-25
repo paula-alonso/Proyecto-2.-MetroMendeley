@@ -11,6 +11,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.PrintWriter;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import javax.swing.JFileChooser;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -54,11 +56,11 @@ public class Funciones {
     /**
      * Metodo retornar HashFunction
      * @param clave La clave del articulo
-     * @param resumen Objeto resumen
+     * @param modulo 
      * @return hash El indice del articulo en el Hash Table
      */
     public static int hashFunction(int clave, int modulo) {
-        int hash = clave%modulo; // obtiene el modulo de 13 (size del Hash Table) para determinar la posicion en el arreglo
+        int hash = clave%modulo; // obtiene el modulo del size del HashTable(numero primo) para determinar la posicion en el arreglo
         return hash; 
     }
     
@@ -79,47 +81,11 @@ public class Funciones {
         return clave; 
     }
     
-    public static Resumen buscarResumen(int clave, int indice, Lista[] hashTable) {
-        Nodo<Resumen> aux = hashTable[indice].getFirst();
-        Resumen resumen = null;
-        if (aux.getpNext()!=null) {
-            while (aux.getpNext()!=null) {
-                if (aux.getData().getClave() == clave) {
-                    break;
-                }
-                aux = aux.getpNext();
-            }
-            resumen = aux.getData();
-        } else {
-            resumen = aux.getData();
-        }
-        return resumen;
-    }
-    
-    public static PalabraClave buscarPalabra(int clave, int indice, Lista[] hashTable) {
-        Nodo<PalabraClave> aux = hashTable[indice].getFirst();
-        PalabraClave palabra= null;
-        if (aux.getpNext()!=null) {
-            while (aux.getpNext()!=null) {
-                if (aux.getData().getClave() == clave) {
-                    break;
-                }
-                aux = aux.getpNext();
-            }
-            palabra = aux.getData();
-        } else {
-            palabra = aux.getData();
-        }
-        return palabra;
-    }
-    
-    
     /**
      * Metodo insertar articulo en el HashTable
      * @param resumen Articulo a insertar
-     * @param hashTable Hash Table
-     * @param combo
-     * @param hashTable2
+     * @param hashTable Hash Table de titulos
+     * @param hashTable2 Hash Table de palabras clave
      */
     public static void Insert(Resumen resumen, Lista[] hashTable, Lista[] hashTable2) {
         
@@ -129,10 +95,10 @@ public class Funciones {
         int hash = hashFunction(clave, modulo);
         
         /////////
-        String[] claves = resumen.getPalabras_claves().split(",");
+        String[] claves = resumen.getPalabras_claves().trim().split(",");
         String[] autores = resumen.getAutores().trim().split("\n");
         
-        if (hashTable[hash]!=null && hashTable[hash].Buscar(resumen.getTitulo())!=null) {
+        if (hashTable[hash]!=null && hashTable[hash].buscarResumen(resumen.getTitulo())!=null) {
             JOptionPane.showMessageDialog(null, "El artículo " + resumen.getTitulo()+ " ya se encuentra cargado");
         } else {
             if (hashTable[hash]==null) {
@@ -154,7 +120,7 @@ public class Funciones {
             }
             
             for (int i=0; i<autores.length; i++){
-                
+                    autores[i] = autores[i].trim();
                 if (!Buscar.ba.contenido_combobox.contains(autores[i])) {
                     Buscar.ba.autores.addItem(autores[i]);
                     Buscar.ba.contenido_combobox += autores[i] + ",";
@@ -163,14 +129,20 @@ public class Funciones {
         }
     }
     
+    /**
+     * Metodo insertar palabra en el HashTable
+     * @param resumen Articulo que contiene la palabra clave
+     * @param palabra Palabra clave a insertar
+     * @param hashTable Hash Table de palabras clave
+     */
     private static void InsertPalabra(Resumen resumen, String palabra, Lista[] hashTable) {
         
+        palabra = palabra.trim();
         int modulo = hashTable.length;
         int clave = getClave(palabra);
         int hash = hashFunction(clave, modulo);
         
         PalabraClave palabra_clave = new PalabraClave(palabra, clave, resumen);
-        
         if (!Menu.busqueda_palabras.contenido_combobox.contains(palabra)) {
             
             Menu.busqueda_palabras.combo_box.addItem(palabra);
@@ -191,49 +163,11 @@ public class Funciones {
             palabra_clave.setResumenes(resumenes);
         
         } else {
-            palabra_clave = (PalabraClave) BuscarP(clave, hashTable).getData();
+            palabra_clave = (PalabraClave) hashTable[hash].buscarPalabra(palabra);
             Lista resumenes = palabra_clave.getResumenes();
             resumenes.InsertInFinal(resumen);
             palabra_clave.setResumenes(resumenes);
         }
-    }
-    
-    public static Nodo Buscar(int clave, Lista[] hashTable){
-        int modulo = hashTable.length;
-        int indice = hashFunction(clave, modulo);
-        Nodo busqueda = hashTable[indice].getFirst();
-        if (busqueda!= null) {
-            if (busqueda.getpNext()!=null) {
-                Resumen resumen = (Resumen) busqueda.getData();
-                while (resumen.getClave()!=clave && busqueda.getpNext()!=null) {
-                    busqueda = busqueda.getpNext();
-                    resumen = (Resumen) busqueda.getData();
-                }
-                if (resumen.getClave()!=clave) {busqueda = null;}
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "El artículo no existe");
-        }
-        return busqueda; 
-    }
-    
-    public static Nodo BuscarP(int clave, Lista[] hashTable){
-        int modulo = hashTable.length;
-        int indice = hashFunction(clave, modulo);
-        Nodo busqueda = hashTable[indice].getFirst();
-        if (busqueda!= null) {
-            if (busqueda.getpNext()!=null) {
-                PalabraClave palabra = (PalabraClave) busqueda.getData();
-                while (palabra.getClave()!=clave && busqueda.getpNext()!=null) {
-                    busqueda = busqueda.getpNext();
-                    palabra = (PalabraClave) busqueda.getData();
-                }
-                if (palabra.getClave()!=clave) {busqueda = null;}
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "El artículo no existe");
-        }
-        return busqueda; 
     }
     
     /**
@@ -279,8 +213,8 @@ public class Funciones {
      */
     
     public static String getAnalisis(Resumen resumen) {
-        String analisis = "\bTítulo: " + resumen.getTitulo() + "\n\n\bAutores: " + resumen.getAutores();
-        analisis = analisis + "\n\bPalabras clave:\n" + contarPalabras(resumen);
+        String analisis = "Título: " + resumen.getTitulo() + "\n\nAutores: " + resumen.getAutores();
+        analisis = analisis + "\nPalabras clave:\n" + contarPalabras(resumen);
         return analisis;
     }
     
@@ -425,32 +359,86 @@ public class Funciones {
      * @param hashTable tabla de dispersión con los resumenes cargados
      */
      
-       public static void GuardarTxt(Lista[] hashTable){
-           String cadena = "";
-           if(!esVacio(hashTable)){
-               for (int i = 0; i<hashTable.length;i++){
-                   if(hashTable[i]!=null){
-                       Nodo<Resumen> aux = hashTable[i].getFirst();
-                           while(aux!=null){
-                              cadena += aux.getData().getTitulo()+"黎"+aux.getData().getAutores()+"黎"+aux.getData().getCuerpo()+"黎"+aux.getData().getPalabras_claves()+"|"; 
-                              aux = aux.getpNext();
-                       }
-                   }
-               }
-               try{
-               PrintWriter pw=new PrintWriter("test\\resumen.txt");
-               pw.print(cadena);
-               pw.close();
-               JOptionPane.showMessageDialog(null, "Guardado exitoso");
-                }catch(Exception e){
-                    JOptionPane.showMessageDialog(null,"Error!!!");
+        public static void GuardarTxt(Lista[] hashTable){
+            String cadena = "";
+            if(!esVacio(hashTable)){
+                for (int i = 0; i<hashTable.length;i++){
+                    if(hashTable[i]!=null){
+                        Nodo<Resumen> aux = hashTable[i].getFirst();
+                            while(aux!=null){
+                               cadena += aux.getData().getTitulo()+"<>"+aux.getData().getAutores()+"<>"+aux.getData().getCuerpo()+"<>"+aux.getData().getPalabras_claves()+"%%"; 
+                               aux = aux.getpNext();
+                        }
+                    }
                 }
-           }else{
-               JOptionPane.showMessageDialog(null, "No hay datos para guardar");
-           }
-           
-       }
-       
+                try{
+                    
+                    PrintWriter pw=new PrintWriter("resumenTODO.txt");
+                    pw.print(cadena);
+                    pw.close();
+                    JOptionPane.showMessageDialog(null, "Guardado exitoso");
+                 }catch(Exception e){
+                    JOptionPane.showMessageDialog(null,"Error!!!");
+                 }
+            }else{
+                JOptionPane.showMessageDialog(null, "No hay datos para guardar");
+            }
+
+        }
         
+            /**
+            * Metodo leer Txt elegido para cargar
+            * @param hashTable tabla de dispersión que contiene los resumenes
+            * @param hashTable2 tabla de dispersión de palabras claves
+            */
+
+       
+        public static void Precarga(Lista[] hashTable, Lista[] hashTable2){
+            
+            File archivo= null;
+            FileReader fr=null;
+            BufferedReader br = null;
+
+
+             String line;
+             String resumentxt = "";
+            try {
+                Path currentRelativePath = Paths.get("resumenTODO.txt");
+                String s = currentRelativePath.toAbsolutePath().toString();
+                archivo=new File (s); //iguala archivo a la clase File que tiene el txt, se le pasa donde esta ubicado el txt
+
+                if (archivo.exists()) { //verifica que el archivo exista
+                    fr=new FileReader(archivo); //necesario para leer el archivo
+                    br=new BufferedReader(fr);   //necesario para leer el archivo
+                    String cadenass;//string donde se guardara la informacion del txt
+                    String re=""; //string donde se ira agregando la informacion del txt para luego poder ser usada 
+
+                    while ((cadenass=br.readLine())!=null) { //lee hasta llegar a null que significa que se acabo el archivo
+
+                        if(!cadenass.isEmpty()) {//revisa que la linea no sea vacia
+                            re+=cadenass+"\n";
+
+                        }
+                    }
+                    String[] resumenes = re.split("%%");
+
+                    for (int i = 0; i<resumenes.length;i++){
+                        if(!resumenes[i].equals("\n")){
+                            String[] datos = resumenes[i].split("<>");
+                            Resumen r = new Resumen(datos[0], datos[1], datos[2], datos[3]);  
+                            Funciones.Insert(r, hashTable, hashTable2);
+                        }
+                    }
+                    //el !"".equals es para verificar que el string no sea solo un espacio en blanco
+                    //if(!"".equals(re)) {} aqui empiezas a hacer el split
+                    fr.close();//IMPORTANTE
+                    br.close();//IMPORTANTE
+                    JOptionPane.showMessageDialog(null, "Resumenes cargados exitosamente");
+                } else {archivo.createNewFile();} //Crea un archivo si no existe
+
+                }
+                catch (Exception e) {System.out.println(e);}
+
+                  }
 
 }

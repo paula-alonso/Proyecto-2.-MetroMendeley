@@ -5,6 +5,10 @@
 package Ventanas;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import proyecto2.Funciones;
 import proyecto2.Lista;
@@ -29,6 +33,7 @@ public class Menu extends javax.swing.JFrame {
     public static Lista resumenes;
     public static String titulos;
     public static BusquedaPalabras busqueda_palabras = new BusquedaPalabras();
+    public static Boolean cargado = false;
 
 
     /**
@@ -48,7 +53,7 @@ public class Menu extends javax.swing.JFrame {
         Header = new javax.swing.JPanel();
         fondo = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -56,6 +61,7 @@ public class Menu extends javax.swing.JFrame {
         salir.setBackground(new java.awt.Color(255, 153, 255));
         salir.setFont(new java.awt.Font("Arial Unicode MS", 0, 12)); // NOI18N
         salir.setText("Salir del sistema");
+        salir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 salirActionPerformed(evt);
@@ -66,6 +72,7 @@ public class Menu extends javax.swing.JFrame {
         agregar.setBackground(new java.awt.Color(255, 153, 255));
         agregar.setFont(new java.awt.Font("Arial Unicode MS", 0, 12)); // NOI18N
         agregar.setText("Agregar resumen");
+        agregar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         agregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 agregarActionPerformed(evt);
@@ -76,6 +83,7 @@ public class Menu extends javax.swing.JFrame {
         analizar.setBackground(new java.awt.Color(255, 153, 255));
         analizar.setFont(new java.awt.Font("Arial Unicode MS", 0, 12)); // NOI18N
         analizar.setText("Analizar resumen");
+        analizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         analizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 analizarActionPerformed(evt);
@@ -86,6 +94,7 @@ public class Menu extends javax.swing.JFrame {
         buscar.setBackground(new java.awt.Color(255, 153, 255));
         buscar.setFont(new java.awt.Font("Arial Unicode MS", 0, 12)); // NOI18N
         buscar.setText("Buscar resumen");
+        buscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buscarActionPerformed(evt);
@@ -141,7 +150,6 @@ public class Menu extends javax.swing.JFrame {
             titulos = resumenes.getTitulos();
             AnalizarResumen analizar_resumen = new AnalizarResumen();
             Funciones.AsignarTitulos(titulos, analizar_resumen.lista);
-            AnalizarResumen.texto.setVisible(false);
             analizar_resumen.setVisible(true);
             dispose();
         }
@@ -191,12 +199,23 @@ public class Menu extends javax.swing.JFrame {
             public void run() {
               
                 menu.setVisible(true);
-
                 Imagen im = new Imagen(Header); 
                 Header.add(im).repaint(); //Carga el logo
                 
-          
+                Path currentRelativePath = Paths.get("resumenTODO.txt");
+                String s = currentRelativePath.toAbsolutePath().toString();
+                File archivo = new File (s);
+                
+                if (!cargado && archivo.exists()) {
+                    int carga = JOptionPane.showConfirmDialog(null, "¿Desea restaurar la sesión previa?","Precarga de datos", 0, 1);
+                    if (carga==JOptionPane.YES_OPTION) {
+                        
+                        
+                        Funciones.Precarga(hashTable, hashTable2);
+                    }
+                    cargado = true;
                 }
+            }
         });
     }
 
