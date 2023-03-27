@@ -110,20 +110,29 @@ public class Lista<T> {
     }
     
     /**
-     * Metodo para buscar un resumen en una posicion del hashtable
-     * @param titulo del resumen
-     * @return resumen encontrado
+     * Metodo para buscar un objeto en un elemento del hashtable
+     * @param referencia La referencia a partir de la cual se quiere buscar
+     * @param tipo Tipo de objeto que se quiere buscar ("r" =  Resumen, "p" = Palabra clave)
+     * @return dato encontrado
      */
     
-    public Resumen buscarResumen(String titulo){
-        Nodo<Resumen> temp = First;
+    public Object buscar(String referencia, String tipo){
+        Nodo temp = First;
         if(!this.isEmpty()){
             if (temp.getpNext()==null) {
                 return temp.getData();
             } else {
                 while (temp!=null) {
-                    if (temp.getData().getTitulo().equalsIgnoreCase(titulo)){
-                        return temp.getData();
+                    if (tipo.equals("r")){ // si se busca un resumen
+                        Resumen resumen = (Resumen) temp.getData();
+                        if (resumen.getTitulo().equalsIgnoreCase(referencia)) {
+                            return temp.getData();
+                        }
+                    } if (tipo.equals("p")){ // si se busca una palabra clave
+                        PalabraClave palabra = (PalabraClave) temp.getData();
+                        if (palabra.getPalabra().equalsIgnoreCase(referencia)) {
+                            return temp.getData();
+                        }
                     }
                     temp = temp.getpNext();
                 }
@@ -133,30 +142,7 @@ public class Lista<T> {
     }
     
     /**
-     * Metodo para buscar una palabra en una posicion del hashtable
-     * @param palabra clave
-     * @return palabra encontrada
-     */
-    
-    public PalabraClave buscarPalabra(String palabra){
-        Nodo<PalabraClave> temp = First;
-        if(!this.isEmpty()){
-            if (temp.getpNext()==null) {
-                return temp.getData();
-            } else {
-                while (temp !=null) {
-                    if (temp.getData().getPalabra().equalsIgnoreCase(palabra)){
-                        return temp.getData();
-                    }
-                    temp = temp.getpNext();
-                }
-            }
-        }
-        return null;
-    }
-    
-    /**
-     * Metodo para ordenar la lista alfabeticamente
+     * Metodo para ordenar la lista alfabeticamente (de forma creciente)
      */
     public void OrdenarCrec(){
         

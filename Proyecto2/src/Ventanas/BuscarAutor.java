@@ -75,7 +75,7 @@ public class BuscarAutor extends javax.swing.JFrame {
 
         volver.setBackground(new java.awt.Color(255, 153, 255));
         volver.setFont(new java.awt.Font("Arial Unicode MS", 0, 12)); // NOI18N
-        volver.setText("volver");
+        volver.setText("Volver");
         volver.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         volver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

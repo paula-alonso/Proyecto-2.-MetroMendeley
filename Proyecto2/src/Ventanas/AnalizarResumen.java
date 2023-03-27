@@ -131,7 +131,7 @@ public class AnalizarResumen extends javax.swing.JFrame {
         int clave = Funciones.getClave(seleccion);
         int modulo = hashTable.length;
         int hash = Funciones.hashFunction(clave, modulo);
-        Resumen resumen = hashTable[hash].buscarResumen(seleccion);
+        Resumen resumen = (Resumen) hashTable[hash].buscar(seleccion, "r");
         String analisis = Funciones.getAnalisis(resumen);
         texto.setText(analisis);
     }//GEN-LAST:event_listaMouseClicked

@@ -98,7 +98,7 @@ public class Funciones {
         String[] claves = resumen.getPalabras_claves().trim().split(",");
         String[] autores = resumen.getAutores().trim().split("\n");
         
-        if (hashTable[hash]!=null && hashTable[hash].buscarResumen(resumen.getTitulo())!=null) {
+        if (hashTable[hash]!=null && hashTable[hash].buscar(resumen.getTitulo(), "r")!=null) {
             JOptionPane.showMessageDialog(null, "El artículo " + resumen.getTitulo()+ " ya se encuentra cargado");
         } else {
             if (hashTable[hash]==null) {
@@ -163,7 +163,7 @@ public class Funciones {
             palabra_clave.setResumenes(resumenes);
         
         } else {
-            palabra_clave = (PalabraClave) hashTable[hash].buscarPalabra(palabra);
+            palabra_clave = (PalabraClave) hashTable[hash].buscar(palabra, "p");
             Lista resumenes = palabra_clave.getResumenes();
             resumenes.InsertInFinal(resumen);
             palabra_clave.setResumenes(resumenes);

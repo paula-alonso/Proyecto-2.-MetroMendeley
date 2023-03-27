@@ -7,7 +7,6 @@ package Ventanas;
 import static Ventanas.Menu.hashTable;
 import proyecto2.Funciones;
 import static proyecto2.Funciones.hashFunction;
-import proyecto2.Nodo;
 import proyecto2.Resumen;
 
 /**
@@ -90,7 +89,7 @@ public class Detalles extends javax.swing.JFrame {
         String seleccion = lista.getSelectedValue();
         String detalles = "";
         int hash = hashFunction(Funciones.getClave(seleccion), hashTable.length);
-        Resumen resumen = hashTable[hash].buscarResumen(seleccion);
+        Resumen resumen = (Resumen) hashTable[hash].buscar(seleccion, "r");
         detalles = resumen.mostrarResumen();
         this.dispose();
         DetArtSelec das = new DetArtSelec();

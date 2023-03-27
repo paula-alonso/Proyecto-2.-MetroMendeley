@@ -90,7 +90,7 @@ public class BuscarTitulo extends javax.swing.JFrame {
             int clave = Funciones.getClave(seleccion);
             int modulo = hashTable.length;
             int hash = Funciones.hashFunction(clave, modulo);
-            Resumen resumen = hashTable[hash].buscarResumen(seleccion);
+            Resumen resumen = (Resumen) hashTable[hash].buscar(seleccion, "r");
             String resumen_string = resumen.mostrarResumen();
             BusquedaPalabras.texto.setText(resumen_string);
             this.dispose();
