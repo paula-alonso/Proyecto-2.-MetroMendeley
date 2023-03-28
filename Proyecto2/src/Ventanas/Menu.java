@@ -133,8 +133,8 @@ public class Menu extends javax.swing.JFrame {
         File file = Funciones.FileChooser();
         if (file!=null){
             Resumen resumen = Funciones.LeerTxt(file);
-            
-            Funciones.Insert(resumen, hashTable, hashTable2);
+            if (resumen.getCuerpo() != null && resumen.getTitulo() != null && resumen.getAutores() != null && resumen.getPalabras_claves() != null){
+                Funciones.Insert(resumen, hashTable, hashTable2);}
         }
     }//GEN-LAST:event_agregarActionPerformed
 
