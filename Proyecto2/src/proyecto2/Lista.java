@@ -167,6 +167,10 @@ public class Lista<T> {
         }
     }
     
+     /**
+     * Metodo para obtener los titulos
+     */
+    
     public String getTitulos() {
         
         Nodo<Resumen> temp = First;
@@ -181,6 +185,11 @@ public class Lista<T> {
         }
         return titulos_string;
     }
+    
+    /**
+     * Metodo para obtener los titulos segun los autores
+     */
+    
     
     public String getTitulos2(String autores){
         autores = autores.trim();
